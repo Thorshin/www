@@ -1,0 +1,24 @@
+import pyttsx3
+
+# Initialiser le moteur
+engine = pyttsx3.init()
+
+# Forcer la voix masculine (Microsoft David)
+for voice in engine.getProperty('voices'):
+    if "David" in voice.name:
+        engine.setProperty('voice', voice.id)
+        print(f"✅ Voix masculine sélectionnée : {voice.name}")
+        break
+else:
+    print("⚠️ Voix masculine 'David' non trouvée, utilisation de la voix par défaut.")
+
+# Configuration du volume et de la vitesse
+engine.setProperty('volume', 1.0)  # Volume max
+engine.setProperty('rate', 150)    # Vitesse normale
+
+# Texte à lire
+texte = "Bonjour, ceci est une voix masculine hors ligne."
+
+# Lecture vocale
+engine.say(texte)
+engine.runAndWait()

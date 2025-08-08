@@ -1,0 +1,77 @@
+<?php
+session_start();
+echo "<pre>";
+print_r($_SESSION);
+echo "</pre>";
+exit();
+
+$error = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $nom = isset($_POST['username']) ? trim($_POST['username']) : '';
+  $mot_de_passe = isset($_POST['password']) ? $_POST['password'] : '';
+
+  $host = 'localhost';
+  $db = 'travaux_db';
+  $user = 'root';
+  $pass = '';
+  $charset = 'utf8';
+
+  try {
+      $pdo = new PDO("mysql:host=$host;dbname=$db;charset=$charset", $user, $pass);
+      $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  } catch (PDOException $e) {
+      die("Erreur de connexion : " . $e->getMessage());
+  }
+
+  $stmt = $pdo->prepare("SELECT service, site, entité FROM agents WHERE LOWER(nom) = ? AND mot_de_passe = ?");
+  $stmt->execute([strtolower($nom), $mot_de_passe]);
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  if ($row) {
+    $_SESSION['logged_in'] = true;
+    $_SESSION['nom'] = $nom;
+    $_SESSION['service'] = $row['service'];
+    $_SESSION['site'] = $row['site'];
+    $_SESSION['entite'] = $row['entité'];
+
+    echo "<h3>🧾 SESSION ACTIVE :</h3><pre>";
+    print_r($_SESSION);
+    echo "</pre>";
+    exit();
+  } else {
+    $error = "Nom d'utilisateur ou mot de passe incorrect.";
+  }
+}
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connexion</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-4">
+        <h4 class="text-center mb-3">Connexion</h4>
+        <?php if ($error): ?>
+          <div class="alert alert-danger"><?php echo $error; ?></div>
+        <?php endif; ?>
+        <form method="POST">
+          <div class="mb-3">
+            <label class="form-label">Nom d'utilisateur</label>
+            <input type="text" name="username" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Mot de passe</label>
+            <input type="password" name="password" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
