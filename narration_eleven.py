@@ -1,7 +1,7 @@
 from elevenlabs import ElevenLabsClient
 
 # Remplace ta clé ici
-API_KEY = "sk_53407cda550d0fa9073edccac061113c2bc7effe33ee66a1"  # remplace avec ta vraie clé
+API_KEY = ""  # remplace avec ta vraie clé
 
 # Texte à lire
 texte = """
