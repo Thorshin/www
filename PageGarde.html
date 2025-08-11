@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+
         body{ 
             font-family: 'Times New Roman', Times, serif;
 
@@ -14,18 +15,49 @@
             text-align: center;
             color: black;
             padding: 20px;
+            margin-bottom: 10px ;
+        
+        }
+        p{
+            text-align: center;
+            color: black;
+            left: 100px;
+            right: 50px;
+            top: 10px;
+            font-size: x-small;
+            margin-bottom: 0px;
+             margin-left: 100px;
+              margin-top: 20px;
+              margin-right: 50px;
+              
         }
         .ocplogo{
             position: absolute;
-        
-            max-width: 10%;
-            left: 50px;
-            right: 100px;
+            max-width: 20%;
+            left:0px;
+            right: 50px;
+            top: 10px ;
+            width: 250px;
+            height: 50px;
+            bottom: 0;
+            
 
         }
-        h1{
+    
+        h2{
             color: green;
             text-align: center;
+            margin-bottom: 50px;
+        }
+        .entities {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 100%;
+            margin: auto;
+            padding: 10%;
+            height: 100px;
+            
         }
         .card{
             border-radius: 10px;
@@ -34,48 +66,131 @@
             text-align: center;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            height: 30px;
+            width: 30px;
+            left: -25px;
+            right: 5px
+
+            
         }
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
+        .card1 { background-color: #2e7d32; }
+        .card2 { background-color: #43a047; } 
+        .card3 { background-color: #66bb6a; }
+        .card4 { background-color: #81c784; } 
+        .card5 { background-color: #4caf50; }
+        .card6 { background-color: #388e3c; }
+        .card7 { background-color: #2e7d32; }
+        .card8 { background-color: #1b5e20; }
+
+        .card img {
+            position:absolute;
+            top: 0;
+            left: 0;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.4s ease; transform: 0.4 ease;
+            z-index: 0;
+            height: 100%;
+            width: 100%;
+
+        }
+        .card:hover img {
+            opacity: 0.7; 
+        }
+        .card span {
+              position: relative;
+              text-align: center ;
+              font-size: 10px;
+              z-index: 1;
+               transition: opacity 0.4s ease;
+               color: white;}
+        .card:hover span {
+            opacity: 0;
+
+        }
+
+        
         footer{
              background-color: rgb(88, 88, 88);
              width: 100%;
              text-align: center;
-             color: white;}
+             color: white;
+             bottom: 0px;
+             left: 0;
+             right: 0;
+             position: fixed;
+             padding: 10px 0 ;
+             height: 20px;
+
+            }
         
-
-
-
     </style>
 </head>
+
 <body>
     <header>
-        <img class="ocplogo" src="c:\Users\Administrator\Downloads\ocplogo.jpg">
+        <img class="ocplogo" src="ocplogo.jpg">
         <p> HSE Mobile , plateforme de gestion des anomalies chez OCP </p>
         <img src="">
         
     </header>
     <main>
-        <h1> Veuillez choisir l'entité correspondante </h1>
+        <h2> Veuillez choisir l'entité correspondante </h2>
         <div class="entities">
 
-
-           
-            <div class="card" onclick="window.location.href='login.php'"> Entité 1</div>
-            <div class="card" > Entité 2</div>
-            <div class="card"> Entité 3</div>
-            <div class="card"> Entité 4</div>
-            <div class="card"> Entité 5</div>
-            <div class="card"> Entité 6</div>
-            <div class="card"> Entité 7</div>
-            <div class="card"> Entité 8</div>
+            <div class="card card1" >
+                <img src="ENTITY1.jpg" alt="Entity 1">
+                <span> Entité 1 </span>
+                
+            </div>
+            <div class="card card2" >
+                <img src="entity2.jpg" alt="Entity 2">
+                <span> Entité 2</span>
+                
+            </div>
+            <div class="card card3" >
+                <img src="entity3.jpeg" alt="Entity 3">
+                <span> Entité 3</span>
+             
+            </div>
+            <div class="card card4" >
+                <img src="entity4.jpg" alt="Entity 4">
+                <span> Entité 4</span>
+        
+            </div>
+            <div class="card card5" >
+                <img src="entity5.jpeg" alt="Entity 5">
+                <span> Entité 5</span>
+               
+            </div>
+            <div class="card card6" >
+                <img src="entity6.jpeg" alt="Entity 6" >
+                <span> Entité 6</span>
+               
+            </div>
+            <div class="card card7" >
+                <img src="entity7.jpg" alt="Entity 7">
+                <span> Entité 7</span>
+                
+            </div>
+            <div class="card card8">
+                <img src="entity8.jpg" alt="Entity 8">
+                <span> Entité 8</span>
+                
+            </div>
             
         </div>
 
     </main>
     <footer>&copy; 2025 OCP - Tous droits réservés.</footer>
 
+    
 </body>
 </html>
