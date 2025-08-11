@@ -67,7 +67,7 @@ if ($debut && $fin) {
     $params[] = $fin;
 }
 
-$sql = "SELECT * FROM saisie_travaux";
+$sql = "SELECT * FROM saisie_travaux_port";
 if ($ligne_rouge_filter !== '') {
     $where[] = "ligne_rouge = ?";
     $params[] = $ligne_rouge_filter;

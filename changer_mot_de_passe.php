@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $nom = $_SESSION['nom'];
-        $stmt = $pdo->prepare("UPDATE agents SET mot_de_passe = ? WHERE LOWER(nom) = ?");
+        $stmt = $pdo->prepare("UPDATE agents_port SET mot_de_passe = ? WHERE LOWER(nom) = ?");
         $stmt->execute([$new_password, strtolower($nom)]);
 
         $success = 'Mot de passe changé avec succès.';

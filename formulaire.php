@@ -92,11 +92,11 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 </head>
 <body class="bg-light">
 
-<div class="container mt-4 mb-4" style="max-width: 480px;">
+<div class="container mt-0 mb-3" style="max-width: 480px;">
   <div class="card border-danger shadow-sm">
-    <div class="card-body">
+    <div class="card-body p-2">
 
-      <div class="d-flex align-items-center mb-4">
+      <div class="d-flex align-items-center mb-2">
         <img src="images/ocp.png" alt="Logo OCP" style="width: 70px; height: auto;">
         <div class="ms-3" style="font-size: 0.7rem; line-height: 1.2;">
           <div>SBU MINING</div>
@@ -107,7 +107,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
       </div>
 
       
-<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="d-flex justify-content-between align-items-center mb-2">
   <h5 class="mb-0 mx-auto text-success">Relevé d'Anomalies HSE</h5>
 </div>
       <form action="submit.php" method="POST" enctype="multipart/form-data">
@@ -129,7 +129,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
         <div class="mb-3">
           <label class="form-label">Anomalie / SD</label>
-          <textarea name="travail" class="form-control" rows="2" required></textarea>
+          <textarea name="travail" class="form-control" rows="1" required></textarea>
         </div>
 
         <div class="mb-3">
@@ -167,6 +167,13 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 
         </div>
+
+        <div class="mb-3">
+          <label class="form-label">Installation</label>
+          <input type="text" name="installation" class="form-control" placeholder="Installation" required>
+        </div>
+
+        
 
         <div class="mb-3">
           <label class="form-label" style="font-weight: bold; color: blue;">Service concerné</label>

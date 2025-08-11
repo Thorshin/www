@@ -91,7 +91,7 @@ if (isset($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
     }
 }
 
-$sql = "INSERT INTO saisie_travaux (
+$sql = "INSERT INTO saisie_travaux_port (
     date_saisie, nom, site, entite, service, service_concerne, nature, ligne_rouge, anomalie, photo, observations
 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
