@@ -145,42 +145,42 @@
         <h2> Veuillez choisir l'entité correspondante </h2>
         <div class="entities">
 
-            <div class="card card1" >
+            <div class="card card1" data-entite="Entité 1">
                 <img src="ENTITY1.jpg" alt="Entity 1">
                 <span> Entité 1 </span>
                 
             </div>
-            <div class="card card2" >
+            <div class="card card2" data-entite="Entité 2">
                 <img src="entity2.jpg" alt="Entity 2">
                 <span> Entité 2</span>
                 
             </div>
-            <div class="card card3" >
+            <div class="card card3" data-entite="Entité 3">
                 <img src="entity3.jpeg" alt="Entity 3">
                 <span> Entité 3</span>
              
             </div>
-            <div class="card card4" >
+            <div class="card card4" data-entite="Entité 4">
                 <img src="entity4.jpg" alt="Entity 4">
                 <span> Entité 4</span>
         
             </div>
-            <div class="card card5" >
+            <div class="card card5" data-entite="Entité 5">
                 <img src="entity5.jpeg" alt="Entity 5">
                 <span> Entité 5</span>
                
             </div>
-            <div class="card card6" >
+            <div class="card card6" data-entite="Entité 6">
                 <img src="entity6.jpeg" alt="Entity 6" >
                 <span> Entité 6</span>
                
             </div>
-            <div class="card card7" >
+            <div class="card card7" data-entite="Entité 7">
                 <img src="entity7.jpg" alt="Entity 7">
                 <span> Entité 7</span>
                 
             </div>
-            <div class="card card8">
+            <div class="card card8" data-entite="Entité 8">
                 <img src="entity8.jpg" alt="Entity 8">
                 <span> Entité 8</span>
                 
@@ -192,5 +192,16 @@
     <footer>&copy; 2025 OCP - Tous droits réservés.</footer>
 
     
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.card[data-entite]').forEach(function(card){
+          card.addEventListener('click', function(){
+            const entite = card.getAttribute('data-entite');
+            const url = 'login.php?entite=' + encodeURIComponent(entite);
+            window.location.href = url;
+          });
+        });
+      });
+    </script>
 </body>
 </html>

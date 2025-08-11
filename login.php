@@ -1,6 +1,7 @@
 <?php
 session_start();
 $error = '';
+$entiteParam = isset($_GET['entite']) ? trim($_GET['entite']) : '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $nom = isset($_POST['username']) ? trim($_POST['username']) : '';
   $mot_de_passe = isset($_POST['password']) ? $_POST['password'] : '';
@@ -46,6 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
+  <?php if ($entiteParam): ?>
+    <div style="position: fixed; top: 8px; right: 8px; z-index: 1000;">
+      <span class="badge bg-success" style="font-size: 0.85rem;">Entité: <?php echo htmlspecialchars($entiteParam); ?></span>
+    </div>
+  <?php endif; ?>
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-4">
