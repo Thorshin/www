@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       die("Erreur de connexion : " . $e->getMessage());
   }
 
-  $stmt = $pdo->prepare("SELECT service, site, entite FROM agents WHERE LOWER(nom) = ? AND mot_de_passe = ?");
+  $stmt = $pdo->prepare("SELECT service, site, entite FROM agents_port WHERE LOWER(nom) = ? AND mot_de_passe = ?");
   $stmt->execute([strtolower($nom), $mot_de_passe]);
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
 

@@ -11,7 +11,7 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	
 
-    $sql = "ALTER TABLE saisie_travaux ADD ligne_rouge1 INT(1) DEFAULT 0 AFTER nature";
+    $sql = "ALTER TABLE saisie_travaux_port ADD ligne_rouge1 INT(1) DEFAULT 0 AFTER nature";
     $conn->exec($sql);
     echo "✅ Colonne `ligne_rouge1` ajoutée avec succès.";
 } catch (PDOException $e) {

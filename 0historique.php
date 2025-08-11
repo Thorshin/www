@@ -56,7 +56,7 @@ if ($debut && $fin) {
     $params[] = $fin;
 }
 
-$sql = "SELECT * FROM saisie_travaux";
+$sql = "SELECT * FROM saisie_travaux_port";
 if ($where) {
 	$sql .= " WHERE " . implode(" AND ", $where);
 
