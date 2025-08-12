@@ -67,6 +67,9 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             padding: 20px;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             position: relative;
@@ -111,13 +114,16 @@
         }
         .card span {
               position: relative;
-              text-align: center ;
-              justify-content: center;
+              text-align: center;
+              display: inline-block;
+              width: 100%;
+              line-height: 1;
               text-decoration: none;
               font-size: 10px;
               z-index: 1;
-               transition: opacity 0.4s ease;
-               color: white;}
+              transition: opacity 0.4s ease;
+              color: white;
+        }
         .card:hover span {
             opacity: 0;
 
@@ -213,8 +219,15 @@ Direction port Casa <br> </p>
       document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.card[data-entite]').forEach(function(card){
           card.addEventListener('click', function(){
-            const entite = card.getAttribute('data-entite');
-            const url = 'hse_mobile_port/login.php?entite=' + encodeURIComponent(entite);
+            const labelEl = card.querySelector('span');
+            const label = labelEl ? labelEl.textContent.trim() : '';
+            let target = 'hse_mobile_port/login.php';
+            if (label.toLowerCase().includes('beni')) {
+              target = 'hse_mobile_beni_idir/login.php';
+            } else if (label.toLowerCase().includes('port')) {
+              target = 'hse_mobile_port/login.php';
+            }
+            const url = `${target}?location=${encodeURIComponent(label)}`;
             window.location.href = url;
           });
         });

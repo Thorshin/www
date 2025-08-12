@@ -1,12 +1,13 @@
 <?php
 session_start();
 $error = '';
+$locationParam = isset($_GET['location']) ? trim($_GET['location']) : '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $nom = isset($_POST['username']) ? trim($_POST['username']) : '';
   $mot_de_passe = isset($_POST['password']) ? $_POST['password'] : '';
 
   $host = 'localhost';
-  $db = 'casa_port_db';
+$db = 'beni_idir_db';
   $user = 'root';
   $pass = '';
   $charset = 'utf8';
@@ -45,6 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
+  <?php if ($locationParam): ?>
+    <div style="position: fixed; top: 8px; right: 8px; z-index: 1000;">
+      <span class="badge bg-success" style="font-size: 0.85rem;">Lieu: <?php echo htmlspecialchars($locationParam); ?></span>
+    </div>
+  <?php endif; ?>
 
   <div class="container mt-5">
     <div class="row justify-content-center">

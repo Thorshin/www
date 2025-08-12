@@ -1,7 +1,7 @@
 <?php
 
 $host = 'localhost';
-$db = 'casa_port_db';
+$db = 'beni_idir_db';
 $user = 'root';
 $pass = '';
 $charset = 'utf8';

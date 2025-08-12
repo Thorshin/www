@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Le nouveau mot de passe ne peut pas être vide.';
     } else {
         $host = 'localhost';
-        $db = 'casa_port_db';
+        $db = 'beni_idir_db';
         $user = 'root';
         $pass = '';
         $charset = 'utf8';
