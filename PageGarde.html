@@ -65,20 +65,20 @@
         .card{
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            padding: 20px;
+            padding: 12px;
             text-align: center;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 2px;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             position: relative;
             overflow: hidden;
             color: white;
-            height: 30px;
-            width: 30px;
-            left: -25px;
-            right: 5px
+            height: 50px;
+            width: 80px;
 
             
         }
@@ -86,16 +86,16 @@
             transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
-        .card1 { background-color: #2e7d32; }
+        .card1 { background-color: #43a047; }
         .card2 { background-color: #43a047; } 
-        .card3 { background-color: #66bb6a; }
-        .card4 { background-color: #81c784; } 
-        .card5 { background-color: #4caf50; }
-        .card6 { background-color: #388e3c; }
-        .card7 { background-color: #2e7d32; }
-        .card8 { background-color: #1b5e20; }
-        .card9 { background-color: #81c784; } 
-        .card10 { background-color: #2e7d32; }
+        .card3 { background-color: #43a047; }
+        .card4 { background-color: #43a047; } 
+        .card5 { background-color: #43a047; }
+        .card6 { background-color: #43a047; }
+        .card7 { background-color: #43a047; }
+        .card8 { background-color: #43a047; }
+        .card9 { background-color: #43a047; } 
+        .card10 { background-color: #43a047; }
 
         .card img {
             position:absolute;
@@ -123,6 +123,69 @@
               z-index: 1;
               transition: opacity 0.4s ease;
               color: white;
+        }
+        .sub-labels {
+          display: flex;
+          gap: 2px;
+          z-index: 1;
+        }
+        .sub-labels .pill {
+          font-size: 8px;
+          padding: 1px 3px;
+          background: rgba(0,0,0,0.35);
+          border-radius: 3px;
+        }
+
+        /* Overlay for BA choices */
+        .overlay {
+          display: none;
+          position: fixed;
+          inset: 0;
+          background: rgba(0,0,0,0.4);
+          z-index: 2000;
+        }
+        .choice-dialog {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: #fff;
+          color: #333;
+          border-radius: 10px;
+          padding: 16px;
+          width: 260px;
+          box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+          text-align: center;
+        }
+        .choice-title {
+          margin: 0 0 10px 0;
+          font-size: 16px;
+          font-weight: 600;
+          color: #2e7d32;
+        }
+        .choice-buttons {
+          display: flex;
+          gap: 10px;
+          justify-content: center;
+        }
+        .choice-btn {
+          flex: 1;
+          border: none;
+          border-radius: 6px;
+          padding: 8px 10px;
+          font-size: 14px;
+          cursor: pointer;
+          background: #2e7d32;
+          color: #fff;
+        }
+        .choice-cancel {
+          margin-top: 10px;
+          background: transparent;
+          border: none;
+          color: #777;
+          cursor: pointer;
+          font-size: 13px;
+          text-decoration: underline;
         }
         .card:hover span {
             opacity: 0;
@@ -182,7 +245,7 @@ Direction port Casa <br> </p>
             </div>
             <div class="card card5" data-entite="Entité 5">
                 <img src="images/entity5.jpeg" alt="Entity 5">
-                <span> DownStream </span>
+                <span style="white-space: nowrap; overflow: visible;">DownStream</span>
                
             </div>
             <div class="card card6" data-entite="Entité 6">
@@ -199,9 +262,13 @@ Direction port Casa <br> </p>
                 <img src="images/entity8.jpg" alt="Entity 8">
                 <span> Mine Merah</span>
             </div>
-            <div class="card card9" data-entite="Entité 8">
+            <div class="card card9" data-entite="Entité BA" id="card-ba">
                 <img src="/images/entity2.jpg" alt="Entity 9">
-                <span> BA</span>
+                <span>BA</span>
+                <div class="sub-labels">
+                  <span class="pill">MINE</span>
+                  <span class="pill">LAV</span>
+                </div>
             </div>
             <div class="card card10" data-entite="Entité 8">
                 <img src="/images/entity5.jpeg" alt="Entity 10">
@@ -221,6 +288,14 @@ Direction port Casa <br> </p>
           card.addEventListener('click', function(){
             const labelEl = card.querySelector('span');
             const label = labelEl ? labelEl.textContent.trim() : '';
+
+            // Special handling for BA
+            if (card.id === 'card-ba') {
+              const overlay = document.getElementById('ba-overlay');
+              overlay.style.display = 'block';
+              return;
+            }
+
             let target = 'hse_mobile_port/login.php';
             if (label.toLowerCase().includes('beni')) {
               target = 'hse_mobile_beni_idir/login.php';
@@ -231,7 +306,29 @@ Direction port Casa <br> </p>
             window.location.href = url;
           });
         });
+
+        // BA overlay buttons
+        const overlay = document.getElementById('ba-overlay');
+        document.getElementById('ba-mine').addEventListener('click', function(){
+          window.location.href = 'hse_mobile_port/login.php?location=BA-MINE';
+        });
+        document.getElementById('ba-lav').addEventListener('click', function(){
+          window.location.href = 'hse_mobile_port/login.php?location=BA-LAV';
+        });
+        document.getElementById('ba-cancel').addEventListener('click', function(){
+          overlay.style.display = 'none';
+        });
       });
     </script>
+    <div id="ba-overlay" class="overlay">
+      <div class="choice-dialog">
+        <div class="choice-title">Choisir une sous-entité (BA)</div>
+        <div class="choice-buttons">
+          <button id="ba-mine" class="choice-btn">MINE</button>
+          <button id="ba-lav" class="choice-btn">LAV</button>
+        </div>
+        <button id="ba-cancel" class="choice-cancel">Annuler</button>
+      </div>
+    </div>
 </body>
 </html>
