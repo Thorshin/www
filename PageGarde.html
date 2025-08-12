@@ -198,7 +198,7 @@ Direction port Casa <br> </p>
         document.querySelectorAll('.card[data-entite]').forEach(function(card){
           card.addEventListener('click', function(){
             const entite = card.getAttribute('data-entite');
-            const url = 'login.php?entite=' + encodeURIComponent(entite);
+            const url = 'hse_mobile_port/login.php?entite=' + encodeURIComponent(entite);
             window.location.href = url;
           });
         });
