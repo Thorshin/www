@@ -263,7 +263,7 @@ Direction port Casa <br> </p>
                 <span> Mine Merah</span>
             </div>
             <div class="card card9" data-entite="Entité BA" id="card-ba">
-                <img src="/images/BA_LAV.jpg" alt="Entity 9">
+                <img src="images/BA_LAV.jpg" alt="Entity 9">
                 <span>BA</span>
                 <div class="sub-labels">
                   <span class="pill">MINE</span>
@@ -271,7 +271,7 @@ Direction port Casa <br> </p>
                 </div>
             </div>
             <div class="card card10" data-entite="Entité 10">
-                <img src="/images/entity10.png" alt="Entity 10">
+                <img src="images/entity10.png" alt="Entity 10">
                 <span> F&U</span>
             </div>
             
@@ -298,9 +298,11 @@ Direction port Casa <br> </p>
 
             let target = 'hse_mobile_port/login.php';
             if (label.toLowerCase().includes('beni')) {
-              target = 'hse_mobile_beni_idir/login.php';
+              target = 'Beni idir/login.php';
+            } else if (label.toLowerCase().includes('pipeline')) {
+              target = 'Pipeline/login.php';
             } else if (label.toLowerCase().includes('port')) {
-              target = 'hse_mobile_port/login.php';
+              target = 'Port/login.php';
             }
             const url = `${target}?location=${encodeURIComponent(label)}`;
             window.location.href = url;
@@ -310,10 +312,10 @@ Direction port Casa <br> </p>
         // BA overlay buttons
         const overlay = document.getElementById('ba-overlay');
         document.getElementById('ba-mine').addEventListener('click', function(){
-          window.location.href = 'hse_mobile_port/login.php?location=BA-MINE';
+          window.location.href = 'Port/login.php?location=BA-MINE';
         });
         document.getElementById('ba-lav').addEventListener('click', function(){
-          window.location.href = 'hse_mobile_port/login.php?location=BA-LAV';
+          window.location.href = 'Port/login.php?location=BA-LAV';
         });
         document.getElementById('ba-cancel').addEventListener('click', function(){
           overlay.style.display = 'none';
