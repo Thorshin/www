@@ -2,6 +2,9 @@
 session_start();
 $error = '';
 $locationParam = isset($_GET['location']) ? trim($_GET['location']) : '';
+if ($locationParam !== '') {
+  $_SESSION['last_location'] = $locationParam;
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $nom = isset($_POST['username']) ? trim($_POST['username']) : '';
   $mot_de_passe = isset($_POST['password']) ? $_POST['password'] : '';
@@ -46,6 +49,9 @@ $db = 'pipeline_db';
   <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
+  <div style="position: fixed; top: 8px; left: 8px; z-index: 1000;">
+    <a href="../PageGarde.html" class="btn btn-outline-secondary btn-sm">← Choisir une entité</a>
+  </div>
   <?php if ($locationParam): ?>
     <div style="position: fixed; top: 8px; right: 8px; z-index: 1000;">
       <span class="badge bg-success" style="font-size: 0.85rem;">Lieu: <?php echo htmlspecialchars($locationParam); ?></span>

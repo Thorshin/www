@@ -1,7 +1,17 @@
 <?php
 session_start();
-session_unset(); // Supprime toutes les variables de session
-session_destroy(); // Détruit la session
-header('Location: login.php');
+// Conserver temporairement le dernier lieu si présent
+$lastLocation = isset($_SESSION['last_location']) ? $_SESSION['last_location'] : '';
+
+// Nettoyer la session
+session_unset();
+session_destroy();
+
+// Rediriger vers le login avec le lieu si disponible
+if ($lastLocation !== '') {
+    header('Location: login.php?location=' . urlencode($lastLocation));
+} else {
+    header('Location: login.php');
+}
 exit();
 ?>

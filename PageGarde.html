@@ -253,14 +253,13 @@ Direction port Casa <br> </p>
                 <span>Pipeline </span>
                
             </div>
-            <div class="card card7" data-entite="Entité 7">
-                <img src="images/Laverie_MEA.jpg" alt="Entity 7">
-                <span> Laverie MEA</span>
-                
-            </div>
-            <div class="card card8" data-entite="Entité 8">
-                <img src="images/Mine_merah.jpeg" alt="Entity 8">
-                <span> Mine Merah</span>
+            <div class="card card7" data-entite="Entité Merah" id="card-merah">
+                <img src="images/Mine_merah.jpeg" alt="Merah">
+                <span> Merah</span>
+                <div class="sub-labels">
+                  <span class="pill">MINE</span>
+                  <span class="pill">LAV</span>
+                </div>
             </div>
             <div class="card card9" data-entite="Entité BA" id="card-ba">
                 <img src="images/BA_LAV.jpg" alt="Entity 9">
@@ -289,14 +288,18 @@ Direction port Casa <br> </p>
             const labelEl = card.querySelector('span');
             const label = labelEl ? labelEl.textContent.trim() : '';
 
-            // Special handling for BA
+            // Special handling for BA and Merah
             if (card.id === 'card-ba') {
               const overlay = document.getElementById('ba-overlay');
               overlay.style.display = 'block';
               return;
+            } else if (card.id === 'card-merah') {
+              const overlay = document.getElementById('merah-overlay');
+              overlay.style.display = 'block';
+              return;
             }
 
-            let target = 'hse_mobile_port/login.php';
+            let target = 'Port/login.php';
             if (label.toLowerCase().includes('beni')) {
               target = 'Beni idir/login.php';
             } else if (label.toLowerCase().includes('pipeline')) {
@@ -320,6 +323,18 @@ Direction port Casa <br> </p>
         document.getElementById('ba-cancel').addEventListener('click', function(){
           overlay.style.display = 'none';
         });
+
+        // Merah overlay buttons
+        const merahOverlay = document.getElementById('merah-overlay');
+        document.getElementById('merah-mine').addEventListener('click', function(){
+          window.location.href = 'Port/login.php?location=Merah-MINE';
+        });
+        document.getElementById('merah-lav').addEventListener('click', function(){
+          window.location.href = 'Port/login.php?location=Merah-LAV';
+        });
+        document.getElementById('merah-cancel').addEventListener('click', function(){
+          merahOverlay.style.display = 'none';
+        });
       });
     </script>
     <div id="ba-overlay" class="overlay">
@@ -330,6 +345,16 @@ Direction port Casa <br> </p>
           <button id="ba-lav" class="choice-btn">LAV</button>
         </div>
         <button id="ba-cancel" class="choice-cancel">Annuler</button>
+      </div>
+    </div>
+    <div id="merah-overlay" class="overlay">
+      <div class="choice-dialog">
+        <div class="choice-title">Choisir une sous-entité (Merah)</div>
+        <div class="choice-buttons">
+          <button id="merah-mine" class="choice-btn">MINE</button>
+          <button id="merah-lav" class="choice-btn">LAV</button>
+        </div>
+        <button id="merah-cancel" class="choice-cancel">Annuler</button>
       </div>
     </div>
 </body>
