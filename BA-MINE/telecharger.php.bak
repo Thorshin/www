@@ -1,0 +1,13 @@
+<?php
+$format = isset($_GET['format']) ? $_GET['format'] : '';
+if ($format === 'csv') {
+    header("Location: historique.php?export=csv");
+    exit;
+} elseif ($format === 'pdf') {
+    header("Location: historique.php?export=pdf");
+    exit;
+} else {
+    echo "⚠️ Format invalide.";
+    exit;
+}
+?>
