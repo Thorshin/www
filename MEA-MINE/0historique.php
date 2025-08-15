@@ -8,7 +8,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 }
 
 $host = 'localhost';
-$db = 'casa_port_db';
+$db = 'mea_mine_db';
 $user = 'root';
 $pass = '';
 $charset = 'utf8';

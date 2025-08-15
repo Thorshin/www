@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $host = 'localhost';
-$db = 'ba_lav_db';
+$db = 'ba_mine_db';
 $user = 'root';
 $pass = '';
 $charset = 'utf8';

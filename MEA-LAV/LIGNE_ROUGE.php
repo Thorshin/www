@@ -1,7 +1,7 @@
 <?php
 
 $host = 'localhost';
-$db = 'casa_port_db';
+$db = 'mea_lav_db';
 $user = 'root';
 $pass = '';
 $charset = 'utf8';

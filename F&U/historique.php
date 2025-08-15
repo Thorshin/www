@@ -18,7 +18,7 @@ if (!$export_mode) {
 
 
 $host = 'localhost';
-$db = 'casa_port_db';
+$db = 'f&u_db';
 $user = 'root';
 $pass = '';
 $charset = 'utf8';

@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $mot_de_passe = isset($_POST['password']) ? $_POST['password'] : '';
 
   $host = 'localhost';
-  $db = 'casa_port_db';
+  $db = 'mea_mine_db';
   $user = 'root';
   $pass = '';
   $charset = 'utf8';
