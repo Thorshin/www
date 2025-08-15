@@ -109,7 +109,7 @@
     footer small{font-size:13px}
     p{
       font-size: 10px;
-      color: grey
+      color: grey;
       font-weight: normal;
       text-align: left;
     }
@@ -118,11 +118,10 @@
 </head>
 <body>
     <header>
-    <img class="ocplogo" src="images/ocplogo.jpg" alt="OCP logo">
+      <img class="ocplogo" src="/Port/images/ocplogo.png" alt="OCP logo">
     <div class="title">
       <p>SBU MINING <br>
-Khouribga Integrated Platform<br>
-Direction flux planification et performance<br></p>
+Khouribga Integrated Platform<br></p>
     </div>
   </header>
 
@@ -133,7 +132,7 @@ Direction flux planification et performance<br></p>
     <div class="entities" role="list">
 
       <button class="card card1" data-entite="Port Casa" aria-label="Port Casa" role="listitem">
-        <img loading="lazy" src="images/Casa_Port.jpg" alt="Vue du port de Casablanca">
+        <img loading="lazy" src="images/Port_Casa.jpg" alt="Vue du port de Casablanca">
         <div class="content">
           <div class="label">Port Casa</div>
             </div>
@@ -151,9 +150,9 @@ Direction flux planification et performance<br></p>
         <div class="content"><div class="label">Beni idir</div></div>
       </button>
 
-      <button class="card card4" data-entite="Sidi Daoui" aria-label="Sidi Daoui" role="listitem">
-        <img loading="lazy" src="images/Sidi_Daoui.webp" alt="Sidi Daoui">
-        <div class="content"><div class="label">Sidi Daoui</div></div>
+      <button class="card card4" data-entite="Daoui" aria-label="Daoui" role="listitem">
+        <img loading="lazy" src="images/Sidi_Daoui.webp" alt="Daoui">
+        <div class="content"><div class="label">Daoui</div></div>
       </button>
 
       <button class="card card5" data-entite="DownStream" aria-label="DownStream" role="listitem">
@@ -161,9 +160,13 @@ Direction flux planification et performance<br></p>
         <div class="content"><div class="label">DownStream</div></div>
       </button>
 
-      <button class="card card6" data-entite="Pipeline" aria-label="Pipeline" role="listitem">
-        <img loading="lazy" src="images/Pipe.jpg" alt="Pipeline">
-        <div class="content"><div class="label">Pipeline</div></div>
+      <!-- Pipe: center name with two sub-labels underneath -->
+      <button class="card card6" id="card-pipe" data-entite="Pipe" aria-haspopup="dialog" aria-label="Pipe" role="listitem">
+        <img loading="lazy" src="images/Pipe.jpg" alt="Pipe">
+        <div class="content">
+          <div class="label">Pipe</div>
+          <div class="sub-labels"><span class="pill">HS</span><span class="pill">JF</span></div>
+        </div>
       </button>
 
       <!-- Merah: center name with two sub-labels underneath -->
@@ -204,16 +207,27 @@ Direction flux planification et performance<br></p>
             </div>
             </div>
             
-  <div id="merah-overlay" class="overlay" role="dialog" aria-hidden="true">
-    <div class="choice-dialog">
-      <div class="choice-title">Choisir une sous-entité (Merah)</div>
-      <div class="choice-buttons">
-        <button id="merah-mine" class="choice-btn">MINE</button>
-        <button id="merah-lav" class="choice-btn">LAV</button>
-      </div>
-      <button id="merah-cancel" class="choice-cancel">Annuler</button>
-    </div>
-        </div>
+     <div id="merah-overlay" class="overlay" role="dialog" aria-hidden="true">
+     <div class="choice-dialog">
+       <div class="choice-title">Choisir une sous-entité (Merah)</div>
+       <div class="choice-buttons">
+         <button id="merah-mine" class="choice-btn">MINE</button>
+         <button id="merah-lav" class="choice-btn">LAV</button>
+       </div>
+       <button id="merah-cancel" class="choice-cancel">Annuler</button>
+     </div>
+         </div>
+
+   <div id="pipe-overlay" class="overlay" role="dialog" aria-hidden="true">
+     <div class="choice-dialog">
+       <div class="choice-title">Choisir une sous-entité (Pipe)</div>
+       <div class="choice-buttons">
+         <button id="pipe-hs" class="choice-btn">Headstation</button>
+         <button id="pipe-jf" class="choice-btn">JF</button>
+       </div>
+       <button id="pipe-cancel" class="choice-cancel">Annuler</button>
+     </div>
+         </div>
 
   <footer><small>&copy; 2025 OCP - Tous droits réservés.</small></footer>
 
@@ -230,13 +244,27 @@ Direction flux planification et performance<br></p>
       if(card.id === 'card-merah'){
         showOverlay('merah-overlay'); return;
       }
+      if(card.id === 'card-pipe'){
+        showOverlay('pipe-overlay'); return;
+      }
 
-      // routing logic kept from original
-      let target = 'Port/login.php';
+      // routing logic for all entities
+      let target = '';
       const l = label.toLowerCase();
-      if(l.includes('beni')) target = 'Beni idir/login.php';
-      else if(l.includes('pipeline')) target = 'Pipeline/login.php';
-      else if(l.includes('port')) target = 'Port/login.php';
+      
+      if(l.includes('port casa')) target = 'Port/login.php';
+      else if(l.includes('sidi chennane')) target = 'Sidi chennane/login.php';
+      else if(l.includes('beni idir')) target = 'Beni idir/login.php';
+      else if(l.includes('daoui')) target = 'Daoui/login.php';
+      else if(l.includes('downstream')) target = 'Downstream/login.php';
+      else if(l.includes('pipe-jf')) target = 'Pipe JF/login.php';
+      else if(l.includes('pipe-headstation')) target = 'Pipeline/login.php';
+      else if(l.includes('f&u') || l.includes('f et u')) target = 'F&U/login.php';
+      else if(l.includes('merah-mine')) target = 'MEA-MINE/login.php';
+      else if(l.includes('merah-lav')) target = 'MEA-LAV/login.php';
+      else if(l.includes('ba-mine')) target = 'BA-MINE/login.php';
+      else if(l.includes('ba-lav')) target = 'BA-LAV/login.php';
+      else target = 'Port/login.php'; // fallback
 
       window.location.href = `${target}?location=${encodeURIComponent(label)}`;
     });
@@ -257,13 +285,17 @@ Direction flux planification et performance<br></p>
     }
     function hideOverlay(id){const el=document.getElementById(id); if(!el) return; el.style.display='none'; el.setAttribute('aria-hidden','true');}
 
-    document.getElementById('ba-mine').addEventListener('click', ()=> window.location.href='Port/login.php?location=BA-MINE');
-    document.getElementById('ba-lav').addEventListener('click', ()=> window.location.href='Port/login.php?location=BA-LAV');
+    document.getElementById('ba-mine').addEventListener('click', ()=> window.location.href='BA-MINE/login.php?location=BA-MINE');
+    document.getElementById('ba-lav').addEventListener('click', ()=> window.location.href='BA-LAV/login.php?location=BA-LAV');
     document.getElementById('ba-cancel').addEventListener('click', ()=> hideOverlay('ba-overlay'));
 
-    document.getElementById('merah-mine').addEventListener('click', ()=> window.location.href='Port/login.php?location=Merah-MINE');
-    document.getElementById('merah-lav').addEventListener('click', ()=> window.location.href='Port/login.php?location=Merah-LAV');
+    document.getElementById('merah-mine').addEventListener('click', ()=> window.location.href='MEA-MINE/login.php?location=Merah-MINE');
+    document.getElementById('merah-lav').addEventListener('click', ()=> window.location.href='MEA-LAV/login.php?location=Merah-LAV');
     document.getElementById('merah-cancel').addEventListener('click', ()=> hideOverlay('merah-overlay'));
+
+    document.getElementById('pipe-hs').addEventListener('click', ()=> window.location.href='Pipeline/login.php?location=Pipe-Headstation');
+    document.getElementById('pipe-jf').addEventListener('click', ()=> window.location.href='Pipe JF/login.php?location=Pipe-JF');
+    document.getElementById('pipe-cancel').addEventListener('click', ()=> hideOverlay('pipe-overlay'));
 
     // close overlays by tapping outside the dialog
     document.querySelectorAll('.overlay').forEach(o=>{ o.addEventListener('click', (ev)=>{ if(ev.target === o) hideOverlay(o.id); }); });

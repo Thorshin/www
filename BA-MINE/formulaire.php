@@ -101,8 +101,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         <div class="ms-3" style="font-size: 0.7rem; line-height: 1.2;">
           <div>SBU MINING</div>
           <div>Khouribga Integrated Platform</div>
-          <div>Direction flux planification et performance</div>
-          <div>Direction port Casa</div>
+
         </div>
       </div>
 
