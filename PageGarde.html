@@ -1,361 +1,278 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Choix d'entité — OCP (mobile)</title>
     <style>
+    :root{
+      --card-accent: #2e7d32; /* primary green from logo */
+      --muted: #9aa4ad;
+      --pill-bg: rgba(255,255,255,0.12);
+      --card-radius: 12px;
+      --outline-weak: rgba(46,125,50,0.18);
+      --outline-strong: rgba(46,125,50,0.34);
+      --footer-height: 48px;
+    }
 
-        body{ 
-            font-family: 'Times New Roman', Times, serif;
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:#f7fafc; -webkit-font-smoothing:antialiased}
 
-        }
-        header{
-            background-color: white;
-            text-align: center;
-            color: black;
-            padding: 20px;
-            margin-bottom: 10px ;
-            max-height: 200px;
-        
-        }
-        p{
-            text-align: center;
-            color: black;
-            font-size: x-small;
-            margin-bottom: 0px;
-             margin-left: 50px;
-              margin-top: 0px;
-              margin-right: 50px;
-              
-        }
-        .ocplogo{
-            position: absolute;
-            max-width: 20%;
-            left:0px;
-            right: 50px;
-            top: 10px ;
-            width: 250px;
-            height: 50px;
-            bottom: 0;
-            
+    header{
+      background:#fff;
+      color:#09202b;
+      padding:10px 12px;
+      display:flex;gap:10px;align-items:center;justify-content:flex-start;
+      border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;
+      position:sticky;top:0;z-index:50;
+      align-items: center;
+      text-align: center;
+      border-bottom:1px solid rgba(0,0,0,0.04);
+    }
+    .ocplogo{height:40px;width:auto;border-radius:6px;flex:0 0 auto}
+    .title{flex:1}
+    .title p{margin:0;font-weight:600;font-size:13px}
+    .title small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
 
-        }
+    main{max-width:980px;margin:20px auto;padding:0 10px;padding-bottom: calc(var(--footer-height) + 12px);} /* reserve space for footer */
+
+    .entities{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+      margin-top:8px;
+      justify-items:center; /* ensures single leftover items center */
+    }
     
-        h2{
-            color: green;
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        .entities {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 10px;
-            max-width: 100%;
-            margin: auto;
-            padding: 10px;
-            height: 100px;
-            margin-top: -50px;
-            justify-items: center;
 
 
+    .card{
+      position:relative;display:flex;align-items:center;justify-content:center;gap:8px;
+      height:85px;padding:8px;border-radius:var(--card-radius);overflow:hidden;cursor:pointer;user-select:none;
+      transition:transform .14s ease,box-shadow .14s ease,border-color .14s ease;
+      border:3px solid var(--outline-strong);background:#fff;min-height:85px;width:100%;max-width:300px;
+      box-shadow:0 4px 12px rgba(2,6,23,0.04);
+    }
 
-            
-        }
-        .card{
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            padding: 12px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2px;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            position: relative;
-            overflow: hidden;
-            color: white;
-            height: 50px;
-            width: 80px;
+    /* force all variant cards to keep green outline (in case of visual differences) */
+    .card1,.card2,.card3,.card4,.card5,.card6,.card7,.card9,.card10{border-color:var(--outline-strong)}
 
-            
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-        }
-        .card1 { background-color: #43a047; }
-        .card2 { background-color: #43a047; } 
-        .card3 { background-color: #43a047; }
-        .card4 { background-color: #43a047; } 
-        .card5 { background-color: #43a047; }
-        .card6 { background-color: #43a047; }
-        .card7 { background-color: #43a047; }
-        .card8 { background-color: #43a047; }
-        .card9 { background-color: #43a047; } 
-        .card10 { background-color: #43a047; }
+    /* pressed state (visual "pop out") */
+    .card.pressed{transform:translateY(-6px) scale(1.04);box-shadow:0 14px 40px rgba(2,6,23,0.12);border-color:var(--outline-strong)}
 
-        .card img {
-            position:absolute;
-            top: 0;
-            left: 0;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 0.4s ease; transform: 0.4 ease;
-            z-index: 0;
-            height: 100%;
-            width: 100%;
+    /* Lazy-load safe images, minimal filters for performance */
+    .card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.02);transition:transform .35s ease,opacity .25s ease}
 
-        }
-        .card:hover img {
-            opacity: 0.7; 
-        }
-        .card span {
-              position: relative;
-              text-align: center;
-              display: inline-block;
-              width: 100%;
-              line-height: 1;
-              text-decoration: none;
-              font-size: 10px;
-              z-index: 1;
-              transition: opacity 0.4s ease;
-              color: white;
-        }
-        .sub-labels {
-          display: flex;
-          gap: 2px;
-          z-index: 1;
-        }
-        .sub-labels .pill {
-          font-size: 8px;
-          padding: 1px 3px;
-          background: rgba(0,0,0,0.35);
-          border-radius: 3px;
-        }
+    /* overlay for readability */
+    .card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(2,6,23,0.04) 30%, rgba(2,6,23,0.5) 100%);z-index:0}
 
-        /* Overlay for BA choices */
-        .overlay {
-          display: none;
-          position: fixed;
-          inset: 0;
-          background: rgba(0,0,0,0.4);
-          z-index: 2000;
-        }
-        .choice-dialog {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          background: #fff;
-          color: #333;
-          border-radius: 10px;
-          padding: 16px;
-          width: 260px;
-          box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-          text-align: center;
-        }
-        .choice-title {
-          margin: 0 0 10px 0;
-          font-size: 16px;
-          font-weight: 600;
-          color: #2e7d32;
-        }
-        .choice-buttons {
-          display: flex;
-          gap: 10px;
-          justify-content: center;
-        }
-        .choice-btn {
-          flex: 1;
-          border: none;
-          border-radius: 6px;
-          padding: 8px 10px;
-          font-size: 14px;
-          cursor: pointer;
-          background: #2e7d32;
-          color: #fff;
-        }
-        .choice-cancel {
-          margin-top: 10px;
-          background: transparent;
-          border: none;
-          color: #777;
-          cursor: pointer;
-          font-size: 13px;
-          text-decoration: underline;
-        }
-        .card:hover span {
-            opacity: 0;
+    /* center label exactly in the center of the box */
+    .content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%}
+    .label{font-weight:800;font-size:16px;color:#fff;margin:0;text-align:center;line-height:1;text-shadow:2px 2px 4px rgba(0,0,0,0.7)}
 
-        }
+    /* symmetrical pills centered below label */
+    .sub-labels{display:flex;gap:8px;justify-content:center;align-items:center;margin-top:8px}
+    .pill{background:var(--pill-bg);padding:6px 8px;border-radius:999px;font-size:12px;color:#fff;min-width:52px;text-align:center;font-weight:800}
 
-        
+    /* interaction states use green outlines */
+    .card:focus{outline:none;border-color:var(--outline-strong);box-shadow:0 6px 18px rgba(46,125,50,0.10)}
+    .card:hover{transform:translateY(-4px);border-color:var(--outline-strong);box-shadow:0 10px 30px rgba(2,6,23,0.08)}
+
+    /* ensure :active uses pressed style on devices without pointer events */
+    .card:active{transform:translateY(-6px) scale(1.04);border-color:var(--outline-strong);box-shadow:0 14px 40px rgba(2,6,23,0.12)}
+
+    /* color variants kept but subtle so images are primary */
+    .card1{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
+    .card2{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
+    .card3{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
+    .card4{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
+    .card5{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
+    .card6{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
+    .card7{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
+    .card9{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
+    .card10{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
+
+    /* Larger screens: 2 columns then 3 columns. Keep cards compact and centered. */
+    @media(min-width:540px){
+      .entities{grid-template-columns:repeat(2,1fr);gap:12px}
+      .card{height:95px;width:92%;max-width:300px}
+      .label{font-size:17px}
+    }
+    @media(min-width:920px){
+      .entities{grid-template-columns:repeat(3,1fr)}
+      .card{height:105px;width:86%;max-width:280px}
+      .label{font-size:18px}
+    }
+
+    /* bottom-sheet style overlays for mobile (unchanged) */
+    .overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(2,6,23,0.45);align-items:center;justify-content:center;padding:12px}
+    .choice-dialog{background:#fff;color:#111;padding:14px;border-radius:14px;width:100%;max-width:560px;box-shadow:0 12px 40px rgba(2,6,23,0.18)}
+    .choice-title{color:var(--card-accent);font-weight:800;margin-bottom:12px;text-align:center}
+    .choice-buttons{display:flex;gap:10px;justify-content:center}
+    .choice-btn{flex:1;padding:12px;border-radius:9px;border:none;background:var(--card-accent);color:#fff;font-weight:800;font-size:15px}
+    .choice-cancel{display:block;margin-top:12px;background:transparent;border:none;color:#666;cursor:pointer;text-decoration:underline;width:100%}
+
+    /* sticky footer fixed to bottom for guaranteed placement */
         footer{
-             background-color: rgb(88, 88, 88);
-             width: 100%;
-             text-align: center;
-             color: white;
-             bottom: 0px;
-             left: 0;
-             right: 0;
-             position: fixed;
-             padding: 10px 0 ;
-             height: 15px;
+      position:fixed;left:0;right:0;bottom:0;height:var(--footer-height);display:flex;align-items:center;justify-content:center;background:#0b1720;color:#e6eef4;padding:0 12px;z-index:60;border-top:1px solid rgba(255,255,255,0.03)
+    }
 
-            }
-        
+    /* make text small to avoid wrapping too much on tiny screens */
+    footer small{font-size:13px}
+
     </style>
 </head>
-
 <body>
     <header>
-        <img class="ocplogo" src="images/ocplogo.jpg">
-        <p> SBU MINING <br>
-Khouribga Integrated Platform<br>
-Direction flux planification et performance<br>
-Direction port Casa <br> </p>
-        <img src="">
-        <h2> Veuillez choisir l'entité correspondante </h2>
-        
-    </header>
-        <div class="entities">
+    <img class="ocplogo" src="images/ocplogo.jpg" alt="OCP logo">
+    <div class="title">
+      <p>SBU MINING — Khouribga Integrated Platform</p>
+      <small>Direction flux planification et performance — Direction port Casa</small>
+    </div>
+  </header>
 
-            <div class="card card1" data-entite="Entité 1" >
-                <img src="images/Casa_Port.jpg" alt="Entity 1">
-                <span> Port Casa </span>
+    <main>
+    <div style="text-align: center; margin-bottom: 38px;">
+      <h2 style="color: #2e7d32; font-weight: 600; font-size: 22px; margin: 0; line-height: 1.3;">Veuillez choisir<br>l'entité correspondante</h2>
+    </div>
+    <div class="entities" role="list">
+
+      <!-- card example: Port Casa -->
+      <button class="card card1" data-entite="Port Casa" aria-label="Port Casa" role="listitem">
+        <img loading="lazy" src="images/Casa_Port.jpg" alt="Vue du port de Casablanca">
+        <div class="content">
+          <div class="label">Port Casa</div>
+            </div>
+      </button>
                 
+      <button class="card card2" data-entite="Sidi Chennane" aria-label="Sidi Chennane" role="listitem">
+        <img loading="lazy" src="images/Sidi_Chennane.jpg" alt="Sidi Chennane">
+        <div class="content">
+          <div class="label">Sidi Chennane</div>
             </div>
-            <div class="card card2" data-entite="Entité 2">
-                <img src="images/Sidi_Chennane.jpg" alt="Entity 2">
-                <span> Sidi Chennane</span>
-                
+      </button>
+
+      <button class="card card3" data-entite="Beni idir" aria-label="Beni idir" role="listitem">
+        <img loading="lazy" src="images/Beni Idir.jpeg" alt="Beni Idir">
+        <div class="content"><div class="label">Beni idir</div></div>
+      </button>
+
+      <button class="card card4" data-entite="Sidi Daoui" aria-label="Sidi Daoui" role="listitem">
+        <img loading="lazy" src="images/Sidi_Daoui.webp" alt="Sidi Daoui">
+        <div class="content"><div class="label">Sidi Daoui</div></div>
+      </button>
+
+      <button class="card card5" data-entite="DownStream" aria-label="DownStream" role="listitem">
+        <img loading="lazy" src="images/DownStream.jpeg" alt="DownStream">
+        <div class="content"><div class="label">DownStream</div></div>
+      </button>
+
+      <button class="card card6" data-entite="Pipeline" aria-label="Pipeline" role="listitem">
+        <img loading="lazy" src="images/Pipe.jpg" alt="Pipeline">
+        <div class="content"><div class="label">Pipeline</div></div>
+      </button>
+
+      <!-- Merah: center name with two sub-labels underneath -->
+      <button class="card card7" id="card-merah" data-entite="Merah" aria-haspopup="dialog" aria-label="Merah" role="listitem">
+        <img loading="lazy" src="images/Mine_merah.jpeg" alt="Merah">
+        <div class="content">
+          <div class="label">Merah</div>
+          <div class="sub-labels"><span class="pill">MINE</span><span class="pill">LAV</span></div>
             </div>
-            <div class="card card3" data-entite="Entité 3">
-                <img src="images/Beni Idir.jpeg" alt="Entity 3">
-                <span> Beni idir </span>
-             
+      </button>
+
+      <!-- BA: same centered layout -->
+      <button class="card card9" id="card-ba" data-entite="BA" aria-haspopup="dialog" aria-label="BA" role="listitem">
+        <img loading="lazy" src="images/BA_LAV.jpg" alt="BA">
+        <div class="content">
+          <div class="label">BA</div>
+          <div class="sub-labels"><span class="pill">MINE</span><span class="pill">LAV</span></div>
             </div>
-            <div class="card card4" data-entite="Entité 4">
-                <img src="images/Sidi_Daoui.webp" alt="Entity 4">
-                <span> Sidi Daoui</span>
-        
-            </div>
-            <div class="card card5" data-entite="Entité 5">
-                <img src="images/DownStream.jpeg" alt="Entity 5">
-                <span style="white-space: nowrap; overflow: visible;">DownStream</span>
+      </button>
+
+      <button class="card card10" data-entite="F&U" aria-label="F et U" role="listitem">
+        <img loading="lazy" src="images/entity10.png" alt="F & U">
+        <div class="content"><div class="label">F & U</div></div>
+      </button>
                
             </div>
-            <div class="card card6" data-entite="Entité 6">
-                <img src="images/Pipe.jpg" alt="Entity 6" >
-                <span>Pipeline </span>
-               
+  </main>
+
+  <!-- bottom-sheet style overlays for mobile -->
+  <div id="ba-overlay" class="overlay" role="dialog" aria-hidden="true">
+    <div class="choice-dialog">
+      <div class="choice-title">Choisir une sous-entité (BA)</div>
+      <div class="choice-buttons">
+        <button id="ba-mine" class="choice-btn">MINE</button>
+        <button id="ba-lav" class="choice-btn">LAV</button>
             </div>
-            <div class="card card7" data-entite="Entité Merah" id="card-merah">
-                <img src="images/Mine_merah.jpeg" alt="Merah">
-                <span> Merah</span>
-                <div class="sub-labels">
-                  <span class="pill">MINE</span>
-                  <span class="pill">LAV</span>
-                </div>
+      <button id="ba-cancel" class="choice-cancel">Annuler</button>
             </div>
-            <div class="card card9" data-entite="Entité BA" id="card-ba">
-                <img src="images/BA_LAV.jpg" alt="Entity 9">
-                <span>BA</span>
-                <div class="sub-labels">
-                  <span class="pill">MINE</span>
-                  <span class="pill">LAV</span>
-                </div>
-            </div>
-            <div class="card card10" data-entite="Entité 10">
-                <img src="images/entity10.png" alt="Entity 10">
-                <span> F&U</span>
             </div>
             
+  <div id="merah-overlay" class="overlay" role="dialog" aria-hidden="true">
+    <div class="choice-dialog">
+      <div class="choice-title">Choisir une sous-entité (Merah)</div>
+      <div class="choice-buttons">
+        <button id="merah-mine" class="choice-btn">MINE</button>
+        <button id="merah-lav" class="choice-btn">LAV</button>
+      </div>
+      <button id="merah-cancel" class="choice-cancel">Annuler</button>
+    </div>
         </div>
-        </body>
 
-  
-    <footer>&copy; 2025 OCP - Tous droits réservés.</footer>
+  <footer><small>&copy; 2025 OCP - Tous droits réservés.</small></footer>
 
-    
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.card[data-entite]').forEach(function(card){
-          card.addEventListener('click', function(){
-            const labelEl = card.querySelector('span');
-            const label = labelEl ? labelEl.textContent.trim() : '';
+  <script>
+    // mobile-friendly interactions + keyboard accessibility
+    document.addEventListener('click', function(e){
+      const card = e.target.closest('.card[data-entite]');
+      if(!card) return;
+      const label = (card.getAttribute('data-entite') || '').trim();
 
-            // Special handling for BA and Merah
-            if (card.id === 'card-ba') {
-              const overlay = document.getElementById('ba-overlay');
-              overlay.style.display = 'block';
-              return;
-            } else if (card.id === 'card-merah') {
-              const overlay = document.getElementById('merah-overlay');
-              overlay.style.display = 'block';
-              return;
-            }
+      if(card.id === 'card-ba'){
+        showOverlay('ba-overlay'); return;
+      }
+      if(card.id === 'card-merah'){
+        showOverlay('merah-overlay'); return;
+      }
 
-            let target = 'Port/login.php';
-            if (label.toLowerCase().includes('beni')) {
-              target = 'Beni idir/login.php';
-            } else if (label.toLowerCase().includes('pipeline')) {
-              target = 'Pipeline/login.php';
-            } else if (label.toLowerCase().includes('port')) {
-              target = 'Port/login.php';
-            }
-            const url = `${target}?location=${encodeURIComponent(label)}`;
-            window.location.href = url;
-          });
-        });
+      // routing logic kept from original
+      let target = 'Port/login.php';
+      const l = label.toLowerCase();
+      if(l.includes('beni')) target = 'Beni idir/login.php';
+      else if(l.includes('pipeline')) target = 'Pipeline/login.php';
+      else if(l.includes('port')) target = 'Port/login.php';
 
-        // BA overlay buttons
-        const overlay = document.getElementById('ba-overlay');
-        document.getElementById('ba-mine').addEventListener('click', function(){
-          window.location.href = 'Port/login.php?location=BA-MINE';
-        });
-        document.getElementById('ba-lav').addEventListener('click', function(){
-          window.location.href = 'Port/login.php?location=BA-LAV';
-        });
-        document.getElementById('ba-cancel').addEventListener('click', function(){
-          overlay.style.display = 'none';
-        });
+      window.location.href = `${target}?location=${encodeURIComponent(label)}`;
+    });
 
-        // Merah overlay buttons
-        const merahOverlay = document.getElementById('merah-overlay');
-        document.getElementById('merah-mine').addEventListener('click', function(){
-          window.location.href = 'Port/login.php?location=Merah-MINE';
-        });
-        document.getElementById('merah-lav').addEventListener('click', function(){
-          window.location.href = 'Port/login.php?location=Merah-LAV';
-        });
-        document.getElementById('merah-cancel').addEventListener('click', function(){
-          merahOverlay.style.display = 'none';
-        });
+    // improve keyboard support for accessibility
+    document.querySelectorAll('.card').forEach(c=>{
+      c.tabIndex = 0;
+      c.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.click(); }
       });
-    </script>
-    <div id="ba-overlay" class="overlay">
-      <div class="choice-dialog">
-        <div class="choice-title">Choisir une sous-entité (BA)</div>
-        <div class="choice-buttons">
-          <button id="ba-mine" class="choice-btn">MINE</button>
-          <button id="ba-lav" class="choice-btn">LAV</button>
-        </div>
-        <button id="ba-cancel" class="choice-cancel">Annuler</button>
-      </div>
-    </div>
-    <div id="merah-overlay" class="overlay">
-      <div class="choice-dialog">
-        <div class="choice-title">Choisir une sous-entité (Merah)</div>
-        <div class="choice-buttons">
-          <button id="merah-mine" class="choice-btn">MINE</button>
-          <button id="merah-lav" class="choice-btn">LAV</button>
-        </div>
-        <button id="merah-cancel" class="choice-cancel">Annuler</button>
-      </div>
-    </div>
+    });
+
+    function showOverlay(id){
+      const el = document.getElementById(id);
+      if(!el) return;el.style.display='flex';el.setAttribute('aria-hidden','false');
+      // focus first button for quick access
+      const btn = el.querySelector('.choice-btn'); if(btn) btn.focus();
+    }
+    function hideOverlay(id){const el=document.getElementById(id); if(!el) return; el.style.display='none'; el.setAttribute('aria-hidden','true');}
+
+    document.getElementById('ba-mine').addEventListener('click', ()=> window.location.href='Port/login.php?location=BA-MINE');
+    document.getElementById('ba-lav').addEventListener('click', ()=> window.location.href='Port/login.php?location=BA-LAV');
+    document.getElementById('ba-cancel').addEventListener('click', ()=> hideOverlay('ba-overlay'));
+
+    document.getElementById('merah-mine').addEventListener('click', ()=> window.location.href='Port/login.php?location=Merah-MINE');
+    document.getElementById('merah-lav').addEventListener('click', ()=> window.location.href='Port/login.php?location=Merah-LAV');
+    document.getElementById('merah-cancel').addEventListener('click', ()=> hideOverlay('merah-overlay'));
+
+    // close overlays by tapping outside the dialog
+    document.querySelectorAll('.overlay').forEach(o=>{ o.addEventListener('click', (ev)=>{ if(ev.target === o) hideOverlay(o.id); }); });
+  </script>
 </body>
 </html>

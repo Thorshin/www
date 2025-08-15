@@ -108,5 +108,29 @@ $stmt->execute([
     $observations
 ]);
 
-echo "<h3>✅ Anomalie enregistrée avec succès !</h3><a href='formulaire.php'>↩ Retour</a>";
+echo '<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Succès</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <meta http-equiv="refresh" content="2;url=formulaire.php">
+</head>
+<body class="bg-light">
+  <div class="container mt-5" style="max-width: 520px;">
+    <div class="card shadow-sm border-success">
+      <div class="card-body text-center">
+        <div class="display-6 mb-2">✅</div>
+        <h5 class="card-title text-success mb-2">Anomalie enregistrée avec succès</h5>
+        <p class="text-muted mb-3">Vous allez être redirigé vers le formulaire dans quelques secondes.</p>
+        <a href="formulaire.php" class="btn btn-success">↩ Retour au formulaire</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    setTimeout(function(){ window.location.href = "formulaire.php"; }, 2000);
+  </script>
+</body>
+</html>';
 ?>
