@@ -4,6 +4,32 @@
 
 Cette application web mobile est conçue pour le signalement et la gestion des anomalies HSE (Hygiène, Sécurité, Environnement) au sein des différentes entités de l'OCP (Office Chérifien des Phosphates). Elle permet aux agents de terrain de signaler rapidement des anomalies observées sur leurs sites de travail.
 
+## Captures d'Écran
+
+### 1. Page de Sélection d'Entité
+![Page de Garde](/captures/photo1.png)
+*Interface principale permettant de choisir l'entité de travail parmi les différentes installations OCP*
+
+### 2. Sélection de Sous-Entité (Pipe - Headstation)
+![Sélection Pipe Headstation](/captures/photo2.png)
+*Sélection de la sous-entité "Headstation" après avoir choisi l'entité "Pipe"*
+
+### 3. Page de Connexion
+![Page de Connexion](/captures/photo3.png)
+*Interface d'authentification pour accéder au système de signalement*
+
+### 4. Formulaire de Signalement d'Anomalie
+![Formulaire d'Anomalie](/captures/photo4.png)
+*Formulaire complet pour saisir les détails d'une anomalie HSE observée*
+
+### 5. Historique des Anomalies
+![Historique des Anomalies](/captures/photo5.png)
+*Vue d'ensemble des anomalies enregistrées avec possibilité de filtrage et d'export*
+
+### 6. Structure de la Base de Données
+![Structure Base de Données](/captures/photo6.png)
+*Schéma de la base de données MySQL dans phpMyAdmin montrant les tables et relations*
+
 ## Fonctionnalités Principales
 
 ### 🏢 Gestion Multi-Entités
@@ -33,8 +59,6 @@ Cette application web mobile est conçue pour le signalement et la gestion des a
   - Installation concernée
   - Service concerné
   - Observations complémentaires
-- **Capture photo** : Appareil photo ou galerie
-- **Validation en temps réel**
 
 ### 🔍 Gestion des Données
 - Base de données MySQL/MariaDB
