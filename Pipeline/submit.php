@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $host = 'localhost';
-$db = 'casa_port_db';
+$db = 'pipeline_db';
 $user = 'root';
 $pass = '';
 $charset = 'utf8';
