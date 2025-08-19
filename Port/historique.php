@@ -14,9 +14,6 @@ if (!$export_mode) {
 
 
 
-
-
-
 $host = 'localhost';
 $db = 'casa_port_db';
 $user = 'root';

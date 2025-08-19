@@ -193,7 +193,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             <option value="MECANIQUE">MECANIQUE</option>
             <option value="ELECTRIQUE">ELECTRIQUE</option>
             <option value="EXPLOITATION">EXPLOITATION</option>
-            <option value="ROCESS">ROCESS</option>
+            <option value="ROCESS">PROCESS</option>
             <option value="HSE">HSE</option>
             <option value="APPRO/MAG">APPRO/MAG</option>
             <option value="BDM">BDM</option>

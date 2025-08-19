@@ -347,7 +347,7 @@ button.btn-sm, a.btn-sm {
   <select name="service_concerne" class="form-select form-select-sm">
        <option value="">-- Tous --</option>
       <?php
-      $services = ['électrique', 'instrumentation', 'bande', 'mécanique', 'BDM', 'HSE', 'exploitation', 'autres'];
+      $services = ['électrique', 'Dragline', 'IF', 'mécanique', 'BDM', 'HSE', 'Exploitation', 'Autres'];
       foreach ($services as $s) {
         $selected = ($s === $service_concerne) ? 'selected' : '';
         echo "<option value='$s' $selected>" . ucfirst($s) . "</option>";
