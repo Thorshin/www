@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $host = 'localhost';
-$db = 'downstream_db';
+$db = 'casa_port_db';
 $user = 'root';
 $pass = '';
 $charset = 'utf8';
@@ -68,11 +68,11 @@ if (isset($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
     $originalType = $_FILES["photo"]["type"];
     $photoName = time() . ".jpg";
     $targetFile = "uploads/" . $photoName;
-    $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-    $maxSize = 2 * 1024 * 1024;
+    $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    $maxSize = 10 * 1024 * 1024; // 10MB pour les photos Android
 
     if (!in_array($originalType, $allowedTypes)) {
-        // Format non supporté (ex: HEIC) → on stocke brut sans traitement
+        // Format non supporté → on stocke brut sans traitement
         if (move_uploaded_file($_FILES["photo"]["tmp_name"], $targetFile)) {
             $photoPath = $targetFile;
         }

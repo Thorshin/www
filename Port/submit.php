@@ -70,76 +70,24 @@ if (isset($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
     $targetFile = "uploads/" . $photoName;
     $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
     $maxSize = 10 * 1024 * 1024; // 10MB pour les photos Android
-    
-    // Debug: afficher les informations du fichier
-    error_log("=== DEBUG UPLOAD PHOTO ===");
-    error_log("Type de fichier: " . $originalType);
-    error_log("Taille du fichier: " . $_FILES["photo"]["size"] . " bytes");
-    error_log("Nom du fichier: " . $_FILES["photo"]["name"]);
-    error_log("Erreur: " . $_FILES["photo"]["error"]);
-    error_log("Fichier temporaire: " . $_FILES["photo"]["tmp_name"]);
-    
-    // Vérifier si le fichier temporaire existe
-    if (!file_exists($_FILES["photo"]["tmp_name"])) {
-        error_log("ERREUR: Le fichier temporaire n'existe pas!");
-        $photoPath = NULL;
+
+    if (!in_array($originalType, $allowedTypes)) {
+        // Format non supporté → on stocke brut sans traitement
+        if (move_uploaded_file($_FILES["photo"]["tmp_name"], $targetFile)) {
+            $photoPath = $targetFile;
+        }
     } else {
-        // Vérifier la taille du fichier temporaire
-        $tempSize = filesize($_FILES["photo"]["tmp_name"]);
-        error_log("Taille du fichier temporaire: " . $tempSize . " bytes");
-        
-        // Gérer les différents cas
-        if (in_array($originalType, $allowedTypes)) {
-            // Format JPEG/PNG standard
-            error_log("Format standard détecté: " . $originalType);
-            if ($_FILES["photo"]["size"] > $maxSize) {
-                error_log("Fichier trop volumineux, tentative de redimensionnement...");
-                if (redimensionner_image($_FILES["photo"]["tmp_name"], $targetFile)) {
-                    $photoPath = $targetFile;
-                    error_log("Image redimensionnée avec succès: " . $targetFile);
-                } else {
-                    error_log("Échec du redimensionnement, tentative de copie directe...");
-                    if (move_uploaded_file($_FILES["photo"]["tmp_name"], $targetFile)) {
-                        $photoPath = $targetFile;
-                        error_log("Image copiée directement après échec du redimensionnement: " . $targetFile);
-                    } else {
-                        error_log("Échec de la copie directe");
-                    }
-                }
-            } else {
-                error_log("Fichier dans la limite de taille, copie directe...");
-                if (move_uploaded_file($_FILES["photo"]["tmp_name"], $targetFile)) {
-                    $photoPath = $targetFile;
-                    error_log("Image copiée avec succès: " . $targetFile);
-                } else {
-                    error_log("Échec de la copie du fichier");
-                }
+        // Format JPEG/PNG → compresser si nécessaire
+        if ($_FILES["photo"]["size"] > $maxSize) {
+            if (redimensionner_image($_FILES["photo"]["tmp_name"], $targetFile)) {
+                $photoPath = $targetFile;
             }
         } else {
-            // Format non standard - essayer de le traiter
-            error_log("Format non standard détecté: " . $originalType);
-            
-            // Essayer de copier le fichier tel quel d'abord
             if (move_uploaded_file($_FILES["photo"]["tmp_name"], $targetFile)) {
                 $photoPath = $targetFile;
-                error_log("Fichier non standard copié avec succès: " . $targetFile);
-            } else {
-                error_log("Échec de la copie du fichier non standard");
             }
         }
-        
-        // Vérifier que le fichier existe après traitement
-        if ($photoPath && !file_exists($photoPath)) {
-            error_log("ERREUR: Le fichier n'existe pas après traitement: " . $photoPath);
-            $photoPath = NULL;
-        } else if ($photoPath) {
-            error_log("Vérification finale: fichier existe et fait " . filesize($photoPath) . " bytes");
-        }
     }
-    
-    // Debug: afficher le chemin final
-    error_log("Chemin final de la photo: " . ($photoPath ?: "NULL"));
-    error_log("=== FIN DEBUG UPLOAD ===");
 }
 
 $sql = "INSERT INTO saisie_travaux (

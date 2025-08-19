@@ -1,133 +1,379 @@
 <!doctype html>
 <html lang="fr">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Choix d'entité — OCP (mobile)</title>
-    <style>
-
-    :root{
-      --card-accent: #2e7d32; /* primary green from logo */
+  <style>
+    :root {
+      --card-accent: #2e7d32;
+      /* primary green from logo */
       --muted: #9aa4ad;
-      --pill-bg: rgba(255,255,255,0.12);
+      --pill-bg: rgba(255, 255, 255, 0.12);
       --card-radius: 12px;
-      --outline-weak: rgba(46,125,50,0.18);
-      --outline-strong: rgba(46,125,50,0.34);
+      --outline-weak: rgba(46, 125, 50, 0.18);
+      --outline-strong: rgba(46, 125, 50, 0.34);
       --footer-height: 48px;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:#f7fafc; -webkit-font-smoothing:antialiased}
+    * {
+      box-sizing: border-box
+    }
 
-        header{
-      background:#fff;
-      color:#09202b;
-      padding:10px 12px;
-      display:flex;gap:10px;align-items:center;justify-content:flex-start;
-      border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;
-      position:sticky;top:0;z-index:50;
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: #f7fafc;
+      -webkit-font-smoothing: antialiased
+    }
+
+    header {
+      background: #fff;
+      color: #09202b;
+      padding: 10px 12px;
+      display: flex;
+      gap: 10px;
       align-items: center;
-            text-align: center;
-      border-bottom:1px solid rgba(0,0,0,0.04);
-    }
-    .ocplogo{height:40px;width:auto;border-radius:6px;flex:0 0 auto}
-    .title{flex:1}
-    .title p{margin:0;font-weight:600;font-size:13px}
-    .title small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
-
-    main{max-width:980px;margin:20px auto;padding:0 10px;padding-bottom: calc(var(--footer-height) + 12px);} /* reserve space for footer */
-
-    .entities{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:10px;
-      margin-top:8px;
-      justify-items:center; /* ensures single leftover items center */
-    }
-    
-
-
-    .card{
-      position:relative;display:flex;align-items:center;justify-content:center;gap:8px;
-      height:85px;padding:8px;border-radius:var(--card-radius);overflow:hidden;cursor:pointer;user-select:none;
-      transition:transform .14s ease,box-shadow .14s ease,border-color .14s ease;
-      border:3px solid var(--outline-strong);background:#fff;min-height:85px;width:100%;max-width:300px;
-      box-shadow:0 4px 12px rgba(2,6,23,0.04);
+      justify-content: flex-start;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      align-items: center;
+      text-align: center;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
     }
 
-    .card1,.card2,.card3,.card4,.card5,.card6,.card7,.card9,.card10{border-color:var(--outline-strong)}
-
-    .card.pressed{transform:translateY(-6px) scale(1.04);box-shadow:0 14px 40px rgba(2,6,23,0.12);border-color:var(--outline-strong)}
-
-    .card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.02);transition:transform .35s ease,opacity .25s ease}
-
-    .card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(2,6,23,0.04) 30%, rgba(2,6,23,0.5) 100%);z-index:0}
-
-    .content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%}
-    .label{font-weight:800;font-size:16px;color:#fff;margin:0;text-align:center;line-height:1;text-shadow:2px 2px 4px rgba(0,0,0,0.7)}
-
-    .sub-labels{display:flex;gap:8px;justify-content:center;align-items:center;margin-top:8px}
-    .pill{background:var(--pill-bg);padding:6px 8px;border-radius:999px;font-size:12px;color:#fff;min-width:52px;text-align:center;font-weight:800}
-
-    .card:focus{outline:none;border-color:var(--outline-strong);box-shadow:0 6px 18px rgba(46,125,50,0.10)}
-    .card:hover{transform:translateY(-4px);border-color:var(--outline-strong);box-shadow:0 10px 30px rgba(2,6,23,0.08)}
-
-    .card:active{transform:translateY(-6px) scale(1.04);border-color:var(--outline-strong);box-shadow:0 14px 40px rgba(2,6,23,0.12)}
-
-    .card1{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
-    .card2{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
-    .card3{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
-    .card4{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
-    .card5{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
-    .card6{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
-    .card7{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
-    .card9{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
-    .card10{background:linear-gradient(160deg,#2a7f2e,#2a7f2e)}
-
-    @media(min-width:540px){
-      .entities{grid-template-columns:repeat(2,1fr);gap:12px}
-      .card{height:95px;width:92%;max-width:300px}
-      .label{font-size:17px}
-    }
-    @media(min-width:920px){
-      .entities{grid-template-columns:repeat(3,1fr)}
-      .card{height:105px;width:86%;max-width:280px}
-      .label{font-size:18px}
+    .ocplogo {
+      height: 40px;
+      width: auto;
+      border-radius: 6px;
+      flex: 0 0 auto
     }
 
-    .overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(2,6,23,0.45);align-items:center;justify-content:center;padding:12px}
-    .choice-dialog{background:#fff;color:#111;padding:14px;border-radius:14px;width:100%;max-width:560px;box-shadow:0 12px 40px rgba(2,6,23,0.18)}
-    .choice-title{color:var(--card-accent);font-weight:800;margin-bottom:12px;text-align:center}
-    .choice-buttons{display:flex;gap:10px;justify-content:center}
-    .choice-btn{flex:1;padding:12px;border-radius:9px;border:none;background:var(--card-accent);color:#fff;font-weight:800;font-size:15px}
-    .choice-cancel{display:block;margin-top:12px;background:transparent;border:none;color:#666;cursor:pointer;text-decoration:underline;width:100%}
-
-        footer{
-      position:fixed;left:0;right:0;bottom:0;height:var(--footer-height);display:flex;align-items:center;justify-content:center;background:#0b1720;color:#e6eef4;padding:0 12px;z-index:60;border-top:1px solid rgba(255,255,255,0.03)
+    .title {
+      flex: 1
     }
 
-    footer small{font-size:13px}
-    p{
+    .title p {
+      margin: 0;
+      font-weight: 600;
+      font-size: 13px
+    }
+
+    .title small {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 4px
+    }
+
+    main {
+      max-width: 980px;
+      margin: 20px auto;
+      padding: 0 10px;
+      padding-bottom: calc(var(--footer-height) + 12px);
+    }
+
+    /* reserve space for footer */
+
+    .entities {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 8px;
+      justify-items: center;
+      /* ensures single leftover items center */
+    }
+
+
+
+    .card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 85px;
+      padding: 8px;
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      cursor: pointer;
+      user-select: none;
+      transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease;
+      border: 3px solid var(--outline-strong);
+      background: #fff;
+      min-height: 85px;
+      width: 100%;
+      max-width: 300px;
+      box-shadow: 0 4px 12px rgba(2, 6, 23, 0.04);
+    }
+
+    .card1,
+    .card2,
+    .card3,
+    .card4,
+    .card5,
+    .card6,
+    .card7,
+    .card9,
+    .card10 {
+      border-color: var(--outline-strong)
+    }
+
+    .card.pressed {
+      transform: translateY(-6px) scale(1.04);
+      box-shadow: 0 14px 40px rgba(2, 6, 23, 0.12);
+      border-color: var(--outline-strong)
+    }
+
+    .card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+      transition: transform .35s ease, opacity .25s ease
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(2, 6, 23, 0.04) 30%, rgba(2, 6, 23, 0.5) 100%);
+      z-index: 0
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%
+    }
+
+    .label {
+      font-weight: 800;
+      font-size: 16px;
+      color: #fff;
+      margin: 0;
+      text-align: center;
+      line-height: 1;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7)
+    }
+
+    .sub-labels {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 8px
+    }
+
+    .pill {
+      background: var(--pill-bg);
+      padding: 6px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #fff;
+      min-width: 52px;
+      text-align: center;
+      font-weight: 800
+    }
+
+    .card:focus {
+      outline: none;
+      border-color: var(--outline-strong);
+      box-shadow: 0 6px 18px rgba(46, 125, 50, 0.10)
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--outline-strong);
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.08)
+    }
+
+    .card:active {
+      transform: translateY(-6px) scale(1.04);
+      border-color: var(--outline-strong);
+      box-shadow: 0 14px 40px rgba(2, 6, 23, 0.12)
+    }
+
+    .card1 {
+      background: linear-gradient(160deg, #2a7f2e, #2a7f2e)
+    }
+
+    .card2 {
+      background: linear-gradient(160deg, #2a7f2e, #2a7f2e)
+    }
+
+    .card3 {
+      background: linear-gradient(160deg, #2a7f2e, #2a7f2e)
+    }
+
+    .card4 {
+      background: linear-gradient(160deg, #2a7f2e, #2a7f2e)
+    }
+
+    .card5 {
+      background: linear-gradient(160deg, #2a7f2e, #2a7f2e)
+    }
+
+    .card6 {
+      background: linear-gradient(160deg, #2a7f2e, #2a7f2e)
+    }
+
+    .card7 {
+      background: linear-gradient(160deg, #2a7f2e, #2a7f2e)
+    }
+
+    .card9 {
+      background: linear-gradient(160deg, #2a7f2e, #2a7f2e)
+    }
+
+    .card10 {
+      background: linear-gradient(160deg, #2a7f2e, #2a7f2e)
+    }
+
+    @media(min-width:540px) {
+      .entities {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px
+      }
+
+      .card {
+        height: 95px;
+        width: 92%;
+        max-width: 300px
+      }
+
+      .label {
+        font-size: 17px
+      }
+    }
+
+    @media(min-width:920px) {
+      .entities {
+        grid-template-columns: repeat(3, 1fr)
+      }
+
+      .card {
+        height: 105px;
+        width: 86%;
+        max-width: 280px
+      }
+
+      .label {
+        font-size: 18px
+      }
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(2, 6, 23, 0.45);
+      align-items: center;
+      justify-content: center;
+      padding: 12px
+    }
+
+    .choice-dialog {
+      background: #fff;
+      color: #111;
+      padding: 14px;
+      border-radius: 14px;
+      width: 100%;
+      max-width: 560px;
+      box-shadow: 0 12px 40px rgba(2, 6, 23, 0.18)
+    }
+
+    .choice-title {
+      color: var(--card-accent);
+      font-weight: 800;
+      margin-bottom: 12px;
+      text-align: center
+    }
+
+    .choice-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center
+    }
+
+    .choice-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 9px;
+      border: none;
+      background: var(--card-accent);
+      color: #fff;
+      font-weight: 800;
+      font-size: 15px
+    }
+
+    .choice-cancel {
+      display: block;
+      margin-top: 12px;
+      background: transparent;
+      border: none;
+      color: #666;
+      cursor: pointer;
+      text-decoration: underline;
+      width: 100%
+    }
+
+    footer {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: var(--footer-height);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0b1720;
+      color: #e6eef4;
+      padding: 0 12px;
+      z-index: 60;
+      border-top: 1px solid rgba(255, 255, 255, 0.03)
+    }
+
+    footer small {
+      font-size: 13px
+    }
+
+    p {
       font-size: 10px;
       color: grey;
       font-weight: normal;
       text-align: left;
     }
-
-    </style>
+  </style>
 </head>
+
 <body>
-    <header>
-      <img class="ocplogo" src="/Port/images/ocplogo.png" alt="OCP logo">
+  <header>
+    <img class="ocplogo" src="Port/images/ocplogo.png" alt="OCP logo">
     <div class="title">
       <p>SBU MINING <br>
-Khouribga Integrated Platform<br></p>
+        Khouribga Integrated Platform<br></p>
     </div>
   </header>
 
-    <main>
+  <main>
     <div style="text-align: center; margin-bottom: 38px;">
-      <h2 style="color: #2e7d32; font-weight: 600; font-size: 22px; margin: 0; line-height: 1.3;">Veuillez choisir<br>l'entité correspondante</h2>
+      <h2 style="color: #2e7d32; font-weight: 600; font-size: 22px; margin: 0; line-height: 1.3;">Veuillez
+        choisir<br>l'entité correspondante</h2>
     </div>
     <div class="entities" role="list">
 
@@ -135,33 +381,40 @@ Khouribga Integrated Platform<br></p>
         <img loading="lazy" src="images/Port_Casa.jpg" alt="Vue du port de Casablanca">
         <div class="content">
           <div class="label">Port Casa</div>
-            </div>
+        </div>
       </button>
-                
+
       <button class="card card2" data-entite="Sidi Chennane" aria-label="Sidi Chennane" role="listitem">
         <img loading="lazy" src="images/Sidi_Chennane.jpg" alt="Sidi Chennane">
         <div class="content">
           <div class="label">Sidi Chennane</div>
-            </div>
+        </div>
       </button>
 
       <button class="card card3" data-entite="Beni idir" aria-label="Beni idir" role="listitem">
         <img loading="lazy" src="images/Beni Idir.jpeg" alt="Beni Idir">
-        <div class="content"><div class="label">Beni idir</div></div>
+        <div class="content">
+          <div class="label">Beni idir</div>
+        </div>
       </button>
 
       <button class="card card4" data-entite="Daoui" aria-label="Daoui" role="listitem">
         <img loading="lazy" src="images/Sidi_Daoui.webp" alt="Daoui">
-        <div class="content"><div class="label">Daoui</div></div>
+        <div class="content">
+          <div class="label">Daoui</div>
+        </div>
       </button>
 
       <button class="card card5" data-entite="DownStream" aria-label="DownStream" role="listitem">
         <img loading="lazy" src="images/DownStream.jpeg" alt="DownStream">
-        <div class="content"><div class="label">DownStream</div></div>
+        <div class="content">
+          <div class="label">DownStream</div>
+        </div>
       </button>
 
       <!-- Pipe: center name with two sub-labels underneath -->
-      <button class="card card6" id="card-pipe" data-entite="Pipe" aria-haspopup="dialog" aria-label="Pipe" role="listitem">
+      <button class="card card6" id="card-pipe" data-entite="Pipe" aria-haspopup="dialog" aria-label="Pipe"
+        role="listitem">
         <img loading="lazy" src="images/Pipe.jpg" alt="Pipe">
         <div class="content">
           <div class="label">Pipe</div>
@@ -170,12 +423,13 @@ Khouribga Integrated Platform<br></p>
       </button>
 
       <!-- Merah: center name with two sub-labels underneath -->
-      <button class="card card7" id="card-merah" data-entite="Merah" aria-haspopup="dialog" aria-label="Merah" role="listitem">
+      <button class="card card7" id="card-merah" data-entite="Merah" aria-haspopup="dialog" aria-label="Merah"
+        role="listitem">
         <img loading="lazy" src="images/Mine_merah.jpeg" alt="Merah">
         <div class="content">
           <div class="label">Merah</div>
           <div class="sub-labels"><span class="pill">MINE</span><span class="pill">LAV</span></div>
-            </div>
+        </div>
       </button>
 
       <!-- BA: same centered layout -->
@@ -184,15 +438,17 @@ Khouribga Integrated Platform<br></p>
         <div class="content">
           <div class="label">BA</div>
           <div class="sub-labels"><span class="pill">MINE</span><span class="pill">LAV</span></div>
-            </div>
+        </div>
       </button>
 
       <button class="card card10" data-entite="F&U" aria-label="F et U" role="listitem">
-        <img loading="lazy" src="images/entity10.png" alt="F & U">
-        <div class="content"><div class="label">F & U</div></div>
+        <img loading="lazy" src="images/f&u.jpg" alt="F & U">
+        <div class="content">
+          <div class="label">F & U</div>
+        </div>
       </button>
-               
-            </div>
+
+    </div>
   </main>
 
   <!-- bottom-sheet style overlays for mobile -->
@@ -202,103 +458,104 @@ Khouribga Integrated Platform<br></p>
       <div class="choice-buttons">
         <button id="ba-mine" class="choice-btn">MINE</button>
         <button id="ba-lav" class="choice-btn">LAV</button>
-            </div>
+      </div>
       <button id="ba-cancel" class="choice-cancel">Annuler</button>
-            </div>
-            </div>
-            
-     <div id="merah-overlay" class="overlay" role="dialog" aria-hidden="true">
-     <div class="choice-dialog">
-       <div class="choice-title">Choisir une sous-entité (Merah)</div>
-       <div class="choice-buttons">
-         <button id="merah-mine" class="choice-btn">MINE</button>
-         <button id="merah-lav" class="choice-btn">LAV</button>
-       </div>
-       <button id="merah-cancel" class="choice-cancel">Annuler</button>
-     </div>
-         </div>
+    </div>
+  </div>
 
-   <div id="pipe-overlay" class="overlay" role="dialog" aria-hidden="true">
-     <div class="choice-dialog">
-       <div class="choice-title">Choisir une sous-entité (Pipe)</div>
-       <div class="choice-buttons">
-         <button id="pipe-hs" class="choice-btn">Headstation</button>
-         <button id="pipe-jf" class="choice-btn">JF</button>
-       </div>
-       <button id="pipe-cancel" class="choice-cancel">Annuler</button>
-     </div>
-         </div>
+  <div id="merah-overlay" class="overlay" role="dialog" aria-hidden="true">
+    <div class="choice-dialog">
+      <div class="choice-title">Choisir une sous-entité (Merah)</div>
+      <div class="choice-buttons">
+        <button id="merah-mine" class="choice-btn">MINE</button>
+        <button id="merah-lav" class="choice-btn">LAV</button>
+      </div>
+      <button id="merah-cancel" class="choice-cancel">Annuler</button>
+    </div>
+  </div>
+
+  <div id="pipe-overlay" class="overlay" role="dialog" aria-hidden="true">
+    <div class="choice-dialog">
+      <div class="choice-title">Choisir une sous-entité (Pipe)</div>
+      <div class="choice-buttons">
+        <button id="pipe-hs" class="choice-btn">Headstation</button>
+        <button id="pipe-jf" class="choice-btn">JF</button>
+      </div>
+      <button id="pipe-cancel" class="choice-cancel">Annuler</button>
+    </div>
+  </div>
 
   <footer><small>&copy; 2025 OCP - Tous droits réservés.</small></footer>
 
   <script>
     // mobile-friendly interactions + keyboard accessibility
-    document.addEventListener('click', function(e){
+    document.addEventListener('click', function (e) {
       const card = e.target.closest('.card[data-entite]');
-      if(!card) return;
+      if (!card) return;
       const label = (card.getAttribute('data-entite') || '').trim();
 
-      if(card.id === 'card-ba'){
+      if (card.id === 'card-ba') {
         showOverlay('ba-overlay'); return;
       }
-      if(card.id === 'card-merah'){
+      if (card.id === 'card-merah') {
         showOverlay('merah-overlay'); return;
       }
-      if(card.id === 'card-pipe'){
+      if (card.id === 'card-pipe') {
         showOverlay('pipe-overlay'); return;
       }
 
       // routing logic for all entities
       let target = '';
       const l = label.toLowerCase();
-      
-      if(l.includes('port casa')) target = 'Port/login.php';
-      else if(l.includes('sidi chennane')) target = 'Sidi chennane/login.php';
-      else if(l.includes('beni idir')) target = 'Beni idir/login.php';
-      else if(l.includes('daoui')) target = 'Daoui/login.php';
-      else if(l.includes('downstream')) target = 'Downstream/login.php';
-      else if(l.includes('pipe-jf')) target = 'Pipe JF/login.php';
-      else if(l.includes('pipe-headstation')) target = 'Pipeline/login.php';
-      else if(l.includes('f&u') || l.includes('f et u')) target = 'F&U/login.php';
-      else if(l.includes('merah-mine')) target = 'MEA-MINE/login.php';
-      else if(l.includes('merah-lav')) target = 'MEA-LAV/login.php';
-      else if(l.includes('ba-mine')) target = 'BA-MINE/login.php';
-      else if(l.includes('ba-lav')) target = 'BA-LAV/login.php';
+
+      if (l.includes('port casa')) target = 'Port/login.php';
+      else if (l.includes('sidi chennane')) target = 'Sidi chennane/login.php';
+      else if (l.includes('beni idir')) target = 'Beni idir/login.php';
+      else if (l.includes('daoui')) target = 'Daoui/login.php';
+      else if (l.includes('downstream')) target = 'Downstream/login.php';
+      else if (l.includes('pipe-jf')) target = 'Pipe JF/login.php';
+      else if (l.includes('pipe-headstation')) target = 'Pipeline/login.php';
+      else if (l.includes('f&u') || l.includes('f et u')) target = 'F&U/login.php';
+      else if (l.includes('merah-mine')) target = 'MEA-MINE/login.php';
+      else if (l.includes('merah-lav')) target = 'MEA-LAV/login.php';
+      else if (l.includes('ba-mine')) target = 'BA-MINE/login.php';
+      else if (l.includes('ba-lav')) target = 'BA-LAV/login.php';
       else target = 'Port/login.php'; // fallback
 
       window.location.href = `${target}?location=${encodeURIComponent(label)}`;
     });
 
     // improve keyboard support for accessibility
-    document.querySelectorAll('.card').forEach(c=>{
+    document.querySelectorAll('.card').forEach(c => {
       c.tabIndex = 0;
-      c.addEventListener('keydown', function(e){
-        if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.click(); }
+      c.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.click(); }
       });
     });
 
-    function showOverlay(id){
+    function showOverlay(id) {
       const el = document.getElementById(id);
-      if(!el) return;el.style.display='flex';el.setAttribute('aria-hidden','false');
+      if (!el) return; el.style.display = 'flex'; el.setAttribute('aria-hidden', 'false');
       // focus first button for quick access
-      const btn = el.querySelector('.choice-btn'); if(btn) btn.focus();
+      const btn = el.querySelector('.choice-btn'); if (btn) btn.focus();
     }
-    function hideOverlay(id){const el=document.getElementById(id); if(!el) return; el.style.display='none'; el.setAttribute('aria-hidden','true');}
+    function hideOverlay(id) { const el = document.getElementById(id); if (!el) return; el.style.display = 'none'; el.setAttribute('aria-hidden', 'true'); }
 
-    document.getElementById('ba-mine').addEventListener('click', ()=> window.location.href='BA-MINE/login.php?location=BA-MINE');
-    document.getElementById('ba-lav').addEventListener('click', ()=> window.location.href='BA-LAV/login.php?location=BA-LAV');
-    document.getElementById('ba-cancel').addEventListener('click', ()=> hideOverlay('ba-overlay'));
+    document.getElementById('ba-mine').addEventListener('click', () => window.location.href = 'BA-MINE/login.php?location=BA-MINE');
+    document.getElementById('ba-lav').addEventListener('click', () => window.location.href = 'BA-LAV/login.php?location=BA-LAV');
+    document.getElementById('ba-cancel').addEventListener('click', () => hideOverlay('ba-overlay'));
 
-    document.getElementById('merah-mine').addEventListener('click', ()=> window.location.href='MEA-MINE/login.php?location=Merah-MINE');
-    document.getElementById('merah-lav').addEventListener('click', ()=> window.location.href='MEA-LAV/login.php?location=Merah-LAV');
-    document.getElementById('merah-cancel').addEventListener('click', ()=> hideOverlay('merah-overlay'));
+    document.getElementById('merah-mine').addEventListener('click', () => window.location.href = 'MEA-MINE/login.php?location=Merah-MINE');
+    document.getElementById('merah-lav').addEventListener('click', () => window.location.href = 'MEA-LAV/login.php?location=Merah-LAV');
+    document.getElementById('merah-cancel').addEventListener('click', () => hideOverlay('merah-overlay'));
 
-    document.getElementById('pipe-hs').addEventListener('click', ()=> window.location.href='Pipeline/login.php?location=Pipe-Headstation');
-    document.getElementById('pipe-jf').addEventListener('click', ()=> window.location.href='Pipe JF/login.php?location=Pipe-JF');
-    document.getElementById('pipe-cancel').addEventListener('click', ()=> hideOverlay('pipe-overlay'));
+    document.getElementById('pipe-hs').addEventListener('click', () => window.location.href = 'Pipeline/login.php?location=Pipe-Headstation');
+    document.getElementById('pipe-jf').addEventListener('click', () => window.location.href = 'Pipe JF/login.php?location=Pipe-JF');
+    document.getElementById('pipe-cancel').addEventListener('click', () => hideOverlay('pipe-overlay'));
 
     // close overlays by tapping outside the dialog
-    document.querySelectorAll('.overlay').forEach(o=>{ o.addEventListener('click', (ev)=>{ if(ev.target === o) hideOverlay(o.id); }); });
+    document.querySelectorAll('.overlay').forEach(o => { o.addEventListener('click', (ev) => { if (ev.target === o) hideOverlay(o.id); }); });
   </script>
 </body>
+
 </html>
