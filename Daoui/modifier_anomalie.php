@@ -123,10 +123,9 @@ $services = ['Ã©lectrique', 'instrumentation', 'bande', 'mÃ©canique', 'BDM',
                                     </label>
                                 </div>
                             </div>
-                            
                             <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-warning">ðŸ’¾ Enregistrer les modifications</button>
-                                <a href="historique.php" class="btn btn-secondary">â†© Retour Ã  l'historique</a>
+                                <button type="submit" class="btn btn-warning">💾 Enregistrer les modifications</button>
+                                <a href="historique.php" class="btn btn-secondary">↩ Retour Ã  l'historique</a>
                             </div>
                         </form>
                     </div>
