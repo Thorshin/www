@@ -1,7 +1,9 @@
 <?php
 session_start();
 $error = '';
+// Afficher le lieu s'il est fourni en paramètre
 $locationParam = isset($_GET['location']) ? trim($_GET['location']) : '';
+// Persister le lieu dans la session pour y revenir après déconnexion
 if ($locationParam !== '') {
   $_SESSION['last_location'] = $locationParam;
 }
@@ -10,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $mot_de_passe = isset($_POST['password']) ? $_POST['password'] : '';
 
   $host = 'localhost';
-$db = 'pipeline_db';
+  $db = 'pipeline_db';
   $user = 'root';
   $pass = '';
   $charset = 'utf8';
@@ -22,7 +24,7 @@ $db = 'pipeline_db';
       die("Erreur de connexion : " . $e->getMessage());
   }
 
-  $stmt = $pdo->prepare("SELECT service, site FROM agents WHERE LOWER(nom) = ? AND mot_de_passe = ?");
+  $stmt = $pdo->prepare("SELECT service, site, role FROM agents WHERE LOWER(nom) = ? AND mot_de_passe = ?");
   $stmt->execute([strtolower($nom), $mot_de_passe]);
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -31,6 +33,7 @@ $db = 'pipeline_db';
     $_SESSION['nom'] = $nom;
     $_SESSION['service'] = $row['service'];
     $_SESSION['site'] = $row['site'];
+    $_SESSION['role'] = $row['role'];
 
     header('Location: formulaire.php');
     exit();
@@ -57,7 +60,6 @@ $db = 'pipeline_db';
       <span class="badge bg-success" style="font-size: 0.85rem;">Lieu: <?php echo htmlspecialchars($locationParam); ?></span>
     </div>
   <?php endif; ?>
-
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-4">

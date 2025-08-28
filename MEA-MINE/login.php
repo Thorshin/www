@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       die("Erreur de connexion : " . $e->getMessage());
   }
 
-  $stmt = $pdo->prepare("SELECT service, site FROM agents WHERE LOWER(nom) = ? AND mot_de_passe = ?");
+  $stmt = $pdo->prepare("SELECT service, site, role FROM agents WHERE LOWER(nom) = ? AND mot_de_passe = ?");
   $stmt->execute([strtolower($nom), $mot_de_passe]);
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['nom'] = $nom;
     $_SESSION['service'] = $row['service'];
     $_SESSION['site'] = $row['site'];
+    $_SESSION['role'] = $row['role'];
 
     header('Location: formulaire.php');
     exit();

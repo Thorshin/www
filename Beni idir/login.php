@@ -3,6 +3,7 @@ session_start();
 $error = '';
 // Afficher le lieu s'il est fourni en paramètre
 $locationParam = isset($_GET['location']) ? trim($_GET['location']) : '';
+// Persister le lieu dans la session pour y revenir après déconnexion
 if ($locationParam !== '') {
   $_SESSION['last_location'] = $locationParam;
 }
@@ -23,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       die("Erreur de connexion : " . $e->getMessage());
   }
 
-  $stmt = $pdo->prepare("SELECT service, site FROM agents WHERE LOWER(nom) = ? AND mot_de_passe = ?");
+  $stmt = $pdo->prepare("SELECT service, site, role FROM agents WHERE LOWER(nom) = ? AND mot_de_passe = ?");
   $stmt->execute([strtolower($nom), $mot_de_passe]);
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -32,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['nom'] = $nom;
     $_SESSION['service'] = $row['service'];
     $_SESSION['site'] = $row['site'];
+    $_SESSION['role'] = $row['role'];
 
     header('Location: formulaire.php');
     exit();
@@ -50,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-<div style="position: fixed; top: 8px; left: 8px; z-index: 1000;">
+  <div style="position: fixed; top: 8px; left: 8px; z-index: 1000;">
     <a href="../PageGarde.html" class="btn btn-outline-secondary btn-sm">← Choisir une entité</a>
   </div>
   <?php if ($locationParam): ?>

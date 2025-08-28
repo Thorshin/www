@@ -14,9 +14,6 @@ if (!$export_mode) {
 
 
 
-
-
-
 $host = 'localhost';
 $db = 'mea_mine_db';
 $user = 'root';
@@ -347,7 +344,7 @@ button.btn-sm, a.btn-sm {
   <select name="service_concerne" class="form-select form-select-sm">
        <option value="">-- Tous --</option>
       <?php
-      $services = ['électrique', 'Dragline', 'IF', 'mécanique', 'BDM', 'HSE', 'Exploitation', 'Autres'];
+      $services = ['électrique', 'instrumentation', 'bande', 'mécanique', 'BDM', 'HSE', 'exploitation', 'autres'];
       foreach ($services as $s) {
         $selected = ($s === $service_concerne) ? 'selected' : '';
         echo "<option value='$s' $selected>" . ucfirst($s) . "</option>";
@@ -412,6 +409,9 @@ button.btn-sm, a.btn-sm {
           <th>Anomalie</th>
           <th>Photo</th>
           <th>Critique</th>
+          <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+          <th>Actions</th>
+          <?php endif; ?>
         </tr>
       </thead>
       <tbody>
@@ -439,6 +439,18 @@ button.btn-sm, a.btn-sm {
   ❗ Critique
 <?php endif; ?>
 </td>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+            <td>
+              <div class="btn-group btn-group-sm" role="group">
+                <button type="button" class="btn btn-warning btn-sm" onclick="modifierAnomalie(<?php echo $row['id']; ?>)" title="Modifier">
+                  ✏️
+                </button>
+                <button type="button" class="btn btn-danger btn-sm" onclick="supprimerAnomalie(<?php echo $row['id']; ?>)" title="Supprimer">
+                  🗑️
+                </button>
+              </div>
+            </td>
+            <?php endif; ?>
           </tr>
         <?php endforeach; ?>
       </tbody>
@@ -462,6 +474,41 @@ button.btn-sm, a.btn-sm {
     info.innerText = `📱 ${largeur} x ${hauteur}`;
     document.body.appendChild(info);
   });
+
+  // Fonction pour modifier une anomalie
+  function modifierAnomalie(id) {
+    if (confirm('Voulez-vous modifier cette anomalie ?')) {
+      // Rediriger vers une page de modification (à créer)
+      window.location.href = `modifier_anomalie.php?id=${id}`;
+    }
+  }
+
+  // Fonction pour supprimer une anomalie
+  function supprimerAnomalie(id) {
+    if (confirm('Êtes-vous sûr de vouloir supprimer cette anomalie ? Cette action est irréversible.')) {
+      // Envoyer une requête AJAX pour supprimer
+      fetch('supprimer_anomalie.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'id=' + id
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert('Anomalie supprimée avec succès !');
+          location.reload(); // Recharger la page
+        } else {
+          alert('Erreur lors de la suppression : ' + data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Erreur:', error);
+        alert('Erreur lors de la suppression');
+      });
+    }
+  }
 </script>
 
 </body>
